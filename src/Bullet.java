@@ -1,10 +1,11 @@
-
-public class Ship {
-
+/**
+ * Created by nune on 5/20/2017 AD.
+ */
+public class Bullet {
     private int x;
     private int y;
 
-    public Ship(int x, int y){
+    public Bullet(int x, int y){
         this.x = x;
         this.y = y;
     }
@@ -18,6 +19,7 @@ public class Ship {
     }
 
     public int getX() {
+
         return x;
     }
 
