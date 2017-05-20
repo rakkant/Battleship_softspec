@@ -21,7 +21,6 @@ public class Game extends PApplet {
 	public void settings(){
 		size(640,800);
 		
-
 		boat = loadImage("image/ship.png");
 		ship = new Ship(valueX,valueY, boat);
 	
@@ -42,9 +41,15 @@ public class Game extends PApplet {
 //		image(ferrari,390,600);
 		
 	}
+//	@Override
+//	public  void mouseDragged() {	
+//		moveBoat();
+//	}
+	
 	@Override
-	public  void mouseDragged() {	
+	public void mouseDragged() {
 		moveBoat();
+		super.mouseDragged();
 	}
 	
 	@Override
@@ -54,14 +59,18 @@ public class Game extends PApplet {
 		super.mousePressed();
 	}
 	
+	@Override
+	public void draw() {
+		image(bg1,0,0);
+		image(ship.getImage(),ship.getX(),ship.getY());
+	}
+	
 	public void moveBoat(){
 		if(ship.getX()+123 >= mouseX && ship.getY()+63 >= mouseY){
 			ship.setX(ship.getX() + (mouseX - x));
 			ship.setY(ship.getY() + (mouseY - y));
-			image(ship.getImage(), ship.getX(), ship.getY());
 			x = mouseX;
 			y = mouseY;
-			setup();
 		}
 	}
 }
