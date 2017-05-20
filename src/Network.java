@@ -1,19 +1,14 @@
-
-import javax.xml.ws.Endpoint;
-
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
 
 
+
 public class Network {
+public static final int CONNECT = 1;
 	
-	public static final int CONNECT = 1;
 	
-	
-	public static void register(Endpoint endpoint) {
-	
-		Kryo k = ((EndPoint) endpoint).getKryo();
-		
-		// need to register all claases that we have to send over network
+	public static void register(EndPoint endpoint) {
+		Kryo k = endpoint.getKryo();
+		//  need to register all classes that we want to send over network
 	}
 }
