@@ -4,13 +4,8 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class Game extends PApplet {
-	PImage bg1;
-	PImage bg2;
-	PImage canoe,canoe2;
-	PImage boat,boat2;
-	PImage ferrari;
-	int valueX = 55 , valueY = 590, x, y;
-	Ship ship;
+	PImage bg1, bg2, canoe, boat, ferrari;
+	int x, y;
 	
 	ArrayList<Ship> ships = new ArrayList<Ship>();
 
@@ -21,30 +16,31 @@ public class Game extends PApplet {
 	public void settings(){
 		size(640,800);
 		
-		boat = loadImage("image/ship.png");
-		ship = new Ship(valueX,valueY, boat);
-	
 		bg1 = loadImage("image/Bg.jpg");
+		boat = loadImage("image/ship.png");
+		canoe = loadImage("image/ship2.png");
+		ferrari = loadImage("image/ship3.png");
+		
+		ships.add(createShip(55, 590, boat));
+		ships.add(createShip(55, 680, boat));
+		ships.add(createShip(205, 600, canoe));
+		ships.add(createShip(295, 600, canoe));
+		ships.add(createShip(390, 600, ferrari));
+
 //		bg2 = loadImage("image/Bg2.jpg");
-//		canoe = loadImage("image/ship2.png");
-//		boat2 = loadImage("image/ship.png");
-//		canoe2 = loadImage("image/ship2.png");
-//		ferrari = loadImage("image/ship3.png");
+	}
+	
+	public Ship createShip(int x, int y, PImage img){
+		return new Ship(x, y, img);
 	}
 
 	public void setup(){
 		image(bg1,0,0);
-		image(ship.getImage(),ship.getX(),ship.getY());
-//		image(boat2,55,680);
-//		image(canoe,205,600);
-//		image(canoe2,295,600);
-//		image(ferrari,390,600);
 		
+		for(Ship s : ships){
+			image(s.getImage(),s.getX(),s.getY());
+		}
 	}
-//	@Override
-//	public  void mouseDragged() {	
-//		moveBoat();
-//	}
 	
 	@Override
 	public void mouseDragged() {
@@ -62,15 +58,19 @@ public class Game extends PApplet {
 	@Override
 	public void draw() {
 		image(bg1,0,0);
-		image(ship.getImage(),ship.getX(),ship.getY());
+		for(Ship s : ships){
+			image(s.getImage(), s.getX(), s.getY());
+		}
 	}
 	
 	public void moveBoat(){
-		if(ship.getX()+123 >= mouseX && ship.getY()+63 >= mouseY){
-			ship.setX(ship.getX() + (mouseX - x));
-			ship.setY(ship.getY() + (mouseY - y));
-			x = mouseX;
-			y = mouseY;
+		for(Ship s : ships){
+			if(s.getX() + s.getImage().getModifiedX2() >= mouseX && s.getY()+ s.getImage().getModifiedY2() >= mouseY){
+				s.setX(s.getX() + (mouseX - x));
+				s.setY(s.getY() + (mouseY - y));
+				x = mouseX;
+				y = mouseY;
+			}
 		}
 	}
 }
