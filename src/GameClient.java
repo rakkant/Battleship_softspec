@@ -1,12 +1,12 @@
 
 import java.io.IOException;
+
 import java.util.Observable;
 
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 
-import static com.sun.tools.corba.se.idl.toJavaPortable.Arguments.Client;
 
 public class GameClient extends Observable {
 

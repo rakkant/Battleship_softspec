@@ -3,20 +3,17 @@ public class Ship {
 
     private int x;
     private int y;
-    private boolean status;
+    private boolean statusAlive;
+    private int dismissPart;
+    private int length = 1 ;
 
-    public Ship(int x, int y){
+    public Ship(int length, int x, int y){
+    	if(length > 0){
+    		this.length = length;
+    	}
         this.x = x;
         this.y = y;
-        this.status = true;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
+        this.statusAlive = true;
     }
 
     public int getY() {
@@ -34,4 +31,26 @@ public class Ship {
     public void setX(int x) {
         this.x = x;
     }
+    
+    public int getLength(){
+    	return length;
+    }
+    
+
+    public boolean isStatus() {
+    	if(dismissPart == 0){
+    		return statusAlive = false;
+    	}
+        return statusAlive = true;
+    }
+
+    public void setStatus(boolean statusAlive) {
+        this.statusAlive = statusAlive;
+    }
+    
+    public void beShot(){
+    	dismissPart--;
+    }
+    
+   
 }
