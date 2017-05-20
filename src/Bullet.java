@@ -1,6 +1,5 @@
-/**
- * Created by nune on 5/20/2017 AD.
- */
+
+
 public class Bullet {
     private int x;
     private int y;
