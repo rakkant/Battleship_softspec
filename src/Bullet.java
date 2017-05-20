@@ -1,22 +1,12 @@
 
-public class Ship {
 
+public class Bullet {
     private int x;
     private int y;
-    private boolean status;
 
-    public Ship(int x, int y){
+    public Bullet(int x, int y){
         this.x = x;
         this.y = y;
-        this.status = true;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
     }
 
     public int getY() {
@@ -28,6 +18,7 @@ public class Ship {
     }
 
     public int getX() {
+
         return x;
     }
 
