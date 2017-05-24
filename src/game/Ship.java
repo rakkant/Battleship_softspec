@@ -6,7 +6,7 @@ public class Ship extends PApplet {
 
     private int x;
     private int y;
-    private boolean status;
+    private boolean status, click;
     String imageSrc;
     PImage img;
 
@@ -16,15 +16,37 @@ public class Ship extends PApplet {
         imageSrc = "image/ship.png";
         this.img = img;
         this.status = true;
+        this.click = false;
     }
-
+    
+    public boolean checkClick(int mouseX, int mouseY){
+    	if(getX() + getImage().getModifiedX2() >= mouseX && getY()+ getImage().getModifiedY2() >= mouseY && getX() <= mouseX && getY() <= mouseY){
+    		setClick(true);
+    		System.out.println(getImgSrc() + " : Click change true ");
+		}
+    	return isClick();
+    }
+    
+    public void move(int x, int y){
+    	setX(getX() + x);
+    	setY(getY() + y);
+    }
+    
     public boolean isStatus() {
         return status;
     }
+    
+    public boolean isClick() {
+		return click;
+	}
 
     public void setStatus(boolean status) {
         this.status = status;
     }
+    
+    public void setClick(boolean click) {
+		this.click = click;
+	}
 
     public int getY() {
         return y;
