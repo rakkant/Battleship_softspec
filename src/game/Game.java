@@ -21,12 +21,7 @@ public class Game extends PApplet {
 	
 	PImage bg1, bg2, canoe, boat, ferrari;
 	int x, y;
-<<<<<<< HEAD:src/game/Game.java
-	
-	
-=======
 
->>>>>>> 197fd27fb3355a73e59afeb6db0e41dee2f67c88:src/Game.java
 	ArrayList<Ship> ships = new ArrayList<Ship>();
 
 	public static void main(String [] args){
