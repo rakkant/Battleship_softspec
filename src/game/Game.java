@@ -112,8 +112,8 @@ public class Game extends PApplet {
 	public void magnetShip(Ship s){
 		int startPointX = 48, startPointY = 54;
 		System.out.println("Y : " + s.getSizeBoatY() + " X : " + s.getSizeBoatX());
-		for(int i=0; i <= 7 - s.getSizeBoatY(); i++){
-			for(int j=0; j <= 7 - s.getSizeBoatX(); j++){
+		for(int i=0; i <= 7 - s.getSizeBoatX(); i++){
+			for(int j=0; j <= 7 - s.getSizeBoatY(); j++){
 				if(s.getX() >= startPointX && s.getY() >= startPointY && s.getX() < startPointX+sizeBoard && s.getY() < startPointY+sizeBoard){
 					s.setMagnet(startPointX, startPointY);
 					break;
