@@ -19,7 +19,7 @@ public class Ship extends PApplet {
     }
     
     public boolean checkClick(int mouseX, int mouseY){
-    	if(getX() + getImage().getModifiedX2() >= mouseX && getY()+ getImage().getModifiedY2() >= mouseY){
+    	if(getX() + getImage().getModifiedX2() >= mouseX && getY()+ getImage().getModifiedY2() >= mouseY && getX() <= mouseX && getY() <= mouseY){
     		setClick(true);
     		System.out.println(getImgSrc() + " : Click change true ");
 		}
