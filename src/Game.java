@@ -5,7 +5,7 @@ import processing.core.PImage;
 
 public class Game extends PApplet {
 	PImage bg1, bg2, canoe, boat, ferrari;
-	int x, y;
+	int x, y, sizeBoard = 68;
 
 	ArrayList<Ship> ships = new ArrayList<Ship>();
 
@@ -78,6 +78,9 @@ public class Game extends PApplet {
 	@Override
 	public void mouseReleased() {
 		for(Ship s : ships){
+			if(s.isClick()){
+				magnetShip(s);
+			}
 			s.setClick(false);
 		}
 
@@ -95,5 +98,20 @@ public class Game extends PApplet {
 
 	public void moveBoat(Ship s){
 		s.move(mouseX - x,mouseY- y);
+	}
+	
+	public void magnetShip(Ship s){
+		int startPointX = 48, startPointY = 54;
+		for(int i=0; i < 7; i++){
+			for(int j=0; j < 7; j++){
+				if(s.getX() >= startPointX && s.getY() >= startPointY && s.getX() < startPointX+sizeBoard && s.getY() < startPointY+sizeBoard){
+					s.setMagnet(startPointX, startPointY);
+					break;
+				}
+				startPointY += sizeBoard;
+			}
+			startPointY = 54;
+			startPointX += sizeBoard;
+		}
 	}
 }

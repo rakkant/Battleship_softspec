@@ -31,6 +31,11 @@ public class Ship extends PApplet {
     	setY(getY() + y);
     }
     
+    public void setMagnet(int x, int y){
+    	setX(x);
+    	setY(y);
+    }
+    
     public boolean isStatus() {
         return status;
     }
