@@ -5,7 +5,7 @@ import processing.core.PImage;
 public class Ship extends PApplet {
 
     private int x, y, sizeBoatX = 0, sizeBoatY = 0, startPositionX, startPositionY;
-    private boolean status, click;
+    private boolean status, click, inField;
     PImage img;
 
     public Ship(int x, int y, PImage img){
@@ -32,6 +32,7 @@ public class Ship extends PApplet {
     public void setMagnet(int x, int y){
     	setX(x);
     	setY(y);
+    	inField = true;
     }
     
     public void setStartPosition(){
@@ -94,6 +95,17 @@ public class Ship extends PApplet {
 	public int getStartPositionY() {
 		return startPositionY;
 	}
+
+	public boolean isInField() {
+		return inField;
+	}
+
+	public void setInField(boolean inField) {
+		this.inField = inField;
+	}
+	
+
+	
 	
 	
     

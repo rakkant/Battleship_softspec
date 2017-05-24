@@ -107,6 +107,7 @@ public class Game extends PApplet {
 	}
 	
 	public void magnetShip(Ship s){
+		
 		int startPointX = 48, startPointY = 54;
 		boolean checkInField = false;
 		for(int i=0; i <= 8 - s.getSizeBoatX() && !checkInField; i++){
@@ -114,6 +115,7 @@ public class Game extends PApplet {
 				if(s.getX() >= startPointX && s.getY() >= startPointY && s.getX() < startPointX+sizeBoard && s.getY() < startPointY+sizeBoard){
 					s.setMagnet(startPointX, startPointY);
 					checkInField = true;
+			
 				}
 				startPointY += sizeBoard;
 			}
@@ -121,5 +123,18 @@ public class Game extends PApplet {
 			startPointX += sizeBoard;
 		}
 		if(!checkInField) s.setStartPosition();
+		
 	}
+	
+	public boolean checkAllInField(){
+		int count = 0;
+		for (Ship s : ships){
+			if (s.isInField())
+				count++;
+		}
+		if (count == ships.size()) return true;
+		else return false;
+	}
+	
+	
 }
