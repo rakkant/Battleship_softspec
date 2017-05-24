@@ -73,7 +73,6 @@ public class Game extends PApplet {
 				}
 			}
 		}
-		printStatus();
 		super.mousePressed();
 	}
 
@@ -92,8 +91,6 @@ public class Game extends PApplet {
 			}
 			s.setClick(false);
 		}
-
-		printStatus();
 		super.mouseReleased();
 	}
 
@@ -111,17 +108,18 @@ public class Game extends PApplet {
 	
 	public void magnetShip(Ship s){
 		int startPointX = 48, startPointY = 54;
-		System.out.println("Y : " + s.getSizeBoatY() + " X : " + s.getSizeBoatX());
-		for(int i=0; i <= 7 - s.getSizeBoatX(); i++){
-			for(int j=0; j <= 7 - s.getSizeBoatY(); j++){
+		boolean checkInField = false;
+		for(int i=0; i <= 8 - s.getSizeBoatX() && !checkInField; i++){
+			for(int j=0; j <= 7 - s.getSizeBoatY() && !checkInField; j++){
 				if(s.getX() >= startPointX && s.getY() >= startPointY && s.getX() < startPointX+sizeBoard && s.getY() < startPointY+sizeBoard){
 					s.setMagnet(startPointX, startPointY);
-					break;
+					checkInField = true;
 				}
 				startPointY += sizeBoard;
 			}
 			startPointY = 54;
 			startPointX += sizeBoard;
 		}
+		if(!checkInField) s.setStartPosition();
 	}
 }

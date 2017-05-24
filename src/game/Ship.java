@@ -4,13 +4,13 @@ import processing.core.PImage;
 
 public class Ship extends PApplet {
 
-    private int x, y, sizeBoatX = 0, sizeBoatY = 0;
+    private int x, y, sizeBoatX = 0, sizeBoatY = 0, startPositionX, startPositionY;
     private boolean status, click;
     PImage img;
 
     public Ship(int x, int y, PImage img){
-        this.x = x;
-        this.y = y;
+        this.x = this.startPositionX = x;
+        this.y = this.startPositionY = y;
         this.img = img;
         this.status = true;
         this.click = false;
@@ -32,6 +32,11 @@ public class Ship extends PApplet {
     public void setMagnet(int x, int y){
     	setX(x);
     	setY(y);
+    }
+    
+    public void setStartPosition(){
+    	setX(getStartPositionX());
+    	setY(getStartPositionY());
     }
     
     public boolean isStatus() {
@@ -81,6 +86,16 @@ public class Ship extends PApplet {
 			this.sizeBoatY = (int) Math.ceil(img.getModifiedY2()/68.0);
 		return sizeBoatY;
 	}
+
+	public int getStartPositionX() {
+		return startPositionX;
+	}
+
+	public int getStartPositionY() {
+		return startPositionY;
+	}
+	
+	
     
     
 }
