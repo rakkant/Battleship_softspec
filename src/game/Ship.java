@@ -4,16 +4,13 @@ import processing.core.PImage;
 
 public class Ship extends PApplet {
 
-    private int x;
-    private int y;
+    private int x, y, sizeBoatX = 0, sizeBoatY = 0;
     private boolean status, click;
-    String imageSrc;
     PImage img;
 
     public Ship(int x, int y, PImage img){
         this.x = x;
         this.y = y;
-        imageSrc = "image/ship.png";
         this.img = img;
         this.status = true;
         this.click = false;
@@ -22,7 +19,7 @@ public class Ship extends PApplet {
     public boolean checkClick(int mouseX, int mouseY){
     	if(getX() + getImage().getModifiedX2() >= mouseX && getY()+ getImage().getModifiedY2() >= mouseY && getX() <= mouseX && getY() <= mouseY){
     		setClick(true);
-    		System.out.println(getImgSrc() + " : Click change true ");
+    		System.out.println(" Click change true ");
 		}
     	return isClick();
     }
@@ -69,15 +66,21 @@ public class Ship extends PApplet {
         this.x = x;
     }
     
-    public void createImg(){
-    	img = loadImage(imageSrc);
-    }
-    
-    public String getImgSrc(){
-		return imageSrc;
-    }
-    
     public PImage getImage(){
     	return img;
     }
+
+	public int getSizeBoatX() {
+		if(this.sizeBoatX == 0)
+			this.sizeBoatX = (int) Math.ceil(img.getModifiedX2()/68.0);
+		return sizeBoatX;
+	}
+
+	public int getSizeBoatY() {
+		if(this.sizeBoatY == 0)
+			this.sizeBoatY = (int) Math.ceil(img.getModifiedY2()/68.0);
+		return sizeBoatY;
+	}
+    
+    
 }

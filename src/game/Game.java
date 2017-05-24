@@ -24,18 +24,6 @@ public class Game extends PApplet {
 
 	public void settings(){
 		size(640,800);
-
-		bg1 = loadImage("image/Bg.jpg");
-		boat = loadImage("image/ship.png");
-		canoe = loadImage("image/ship2.png");
-		ferrari = loadImage("image/ship3.png");
-
-		ships.add(createShip(55, 590, boat));
-		ships.add(createShip(55, 680, boat));
-		ships.add(createShip(205, 600, canoe));
-		ships.add(createShip(295, 600, canoe));
-		ships.add(createShip(390, 600, ferrari));
-
 		//		bg2 = loadImage("image/Bg2.jpg");
 	}
 
@@ -44,7 +32,19 @@ public class Game extends PApplet {
 	}
 
 	public void setup(){
+		
+		bg1 = loadImage("image/Bg.jpg");
+		boat = loadImage("image/ship.png");
+		canoe = loadImage("image/ship2.png");
+		ferrari = loadImage("image/ship3.png");
 		image(bg1,0,0);
+		
+		ships.add(createShip(55, 590, boat));
+		ships.add(createShip(55, 680, boat));
+		ships.add(createShip(205, 600, canoe));
+		ships.add(createShip(295, 600, canoe));
+		ships.add(createShip(390, 600, ferrari));
+		
 		for(Ship s : ships){
 			image(s.getImage(),s.getX(),s.getY());
 		}
@@ -111,8 +111,9 @@ public class Game extends PApplet {
 	
 	public void magnetShip(Ship s){
 		int startPointX = 48, startPointY = 54;
-		for(int i=0; i < 7; i++){
-			for(int j=0; j < 7; j++){
+		System.out.println("Y : " + s.getSizeBoatY() + " X : " + s.getSizeBoatX());
+		for(int i=0; i <= 7 - s.getSizeBoatY(); i++){
+			for(int j=0; j <= 7 - s.getSizeBoatX(); j++){
 				if(s.getX() >= startPointX && s.getY() >= startPointY && s.getX() < startPointX+sizeBoard && s.getY() < startPointY+sizeBoard){
 					s.setMagnet(startPointX, startPointY);
 					break;
