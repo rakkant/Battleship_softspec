@@ -10,14 +10,6 @@ import network.GameServer;
 import network.Network;
 
 public class Game extends PApplet {
-
-	// not used yet
-//	private GameServer gameServer;
-//	private GameClient gameClient;
-//	private boolean isServer;
-//	private boolean isClient;
-//	private JButton startServerButton;
-//	private JButton startClientButton;
 	
 	PImage bg1, bg2, canoe, boat, ferrari;
 	int x, y, sizeBoard = 68;
@@ -25,7 +17,7 @@ public class Game extends PApplet {
 	ArrayList<Ship> ships = new ArrayList<Ship>();
 
 	public static void main(String [] args){
-		PApplet.main("Game");
+		PApplet.main("game.Game");
 	}
 	
 
