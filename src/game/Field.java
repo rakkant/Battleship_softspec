@@ -1,3 +1,4 @@
+package game;
 
 public abstract class Field {
 	 private int length = 1 ;
