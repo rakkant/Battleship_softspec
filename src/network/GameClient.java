@@ -14,7 +14,7 @@ public class GameClient extends Observable {
 	private Client client;
 	private String serverAddress = "127.0.0.1";
 	private int serveerPort = 12345;
-	private int timeout = 5000;
+	private int timeout = 10000;
 
 	public GameClient() {
 		client = new Client();
@@ -38,6 +38,7 @@ public class GameClient extends Observable {
 	class NetworkListener extends Listener {
 
 		public void received(Connection connection, Object object) {
+			System.out.println("Notify");
 			setChanged();
 			notifyObservers(object);
 		}

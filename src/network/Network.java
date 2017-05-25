@@ -4,9 +4,11 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
 
 import game.Board;
+import game.Boat;
 import game.Bullet;
 import game.Field;
 import game.Game;
+import game.GameLogic;
 import game.Player;
 import game.Ship;
 
@@ -24,5 +26,10 @@ public static final int CONNECT = 1;
 		k.register(Ship.class);
 		k.register(Bullet.class);
 		k.register(Board.class);
+		k.register(GameLogic.class);
+		k.register(Boat.class);
+		k.register(int[][].class);
+		k.register(int[].class);
+		k.register(java.util.ArrayList.class);
 	}
 }
