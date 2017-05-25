@@ -11,7 +11,7 @@ import network.Network;
 
 public class Game extends PApplet {
 	
-	PImage bg1, bg2, canoe, boat, ferrari;
+	PImage bg1, bg2, canoe, boat, ferrari,readyBtn;
 	int x, y, sizeBoard = 68;
 
 	ArrayList<Ship> ships = new ArrayList<Ship>();
@@ -20,8 +20,6 @@ public class Game extends PApplet {
 		PApplet.main("game.Game");
 	}
 	
-
-
 	public void settings(){
 		size(640,800);
 		//		bg2 = loadImage("image/Bg2.jpg");
@@ -37,6 +35,7 @@ public class Game extends PApplet {
 		boat = loadImage("image/ship.png");
 		canoe = loadImage("image/ship2.png");
 		ferrari = loadImage("image/ship3.png");
+		readyBtn = loadImage("image/readyBtn.jpg");
 		image(bg1,0,0);
 		
 		ships.add(createShip(55, 590, boat));
@@ -100,6 +99,10 @@ public class Game extends PApplet {
 		for(Ship s : ships){
 			image(s.getImage(), s.getX(), s.getY());
 		}
+		
+		if ( checkAllInField() ){
+			image(readyBtn,50,600);
+		}
 	}
 
 	public void moveBoat(Ship s){
@@ -132,9 +135,10 @@ public class Game extends PApplet {
 			if (s.isInField())
 				count++;
 		}
-		if (count == ships.size()) return true;
+		if (count == ships.size()) {
+			return true;
+		}
 		else return false;
 	}
-	
 	
 }
