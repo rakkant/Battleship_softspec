@@ -124,7 +124,7 @@ public class Game extends PApplet {
 		for(Ship s : ships){
 			b.addShip(s.getBoardPosX(), s.getBoardPosY(), s.getSizeBoatX(), s.getSizeBoatY());
 		}
-		System.out.println(b.toString());
+//		System.out.println(b.toString());
 	}
 
 	public void readyBtnAction(String state){
@@ -155,10 +155,32 @@ public class Game extends PApplet {
 		else {
 			bg = loadImage("image/Bg2.jpg");
 			image(bg,0,0);
+			int posX = 45,posY = 570;
+			noStroke();
+			fill(161,225,234);
+			rect(35,560,220,195,10);
+			int [][] array = new int [8][7];
+			array = b.getSquare();
+			
+			for(int i = 0; i < array[0].length; i++){
+				for(int j = 0; j < array.length; j++){
+					if ( array[j][i] == 1 ){
+						stroke(255,255,255);
+						fill(46,204,113);
+						rect(posX, posY, 24, 24);
+					}
+					else {
+						stroke(255,255,255);
+						noFill();
+						rect(posX, posY, 24, 24);
+					}	
+					posY+=25;
+				}
+				posX+= 25;
+				posY = 570;
+			}
 		}
-		//		readyBtnAction("hover");
 	}
-
 
 	public void moveBoat(Ship s){
 		s.move(mouseX - x,mouseY- y);

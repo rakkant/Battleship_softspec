@@ -55,4 +55,21 @@ public class Board {
 		System.out.println();
 		return board;
 	}
+
+	public int[][] getSquare() {
+		return square;
+	}
+
+	public void setSquare(int[][] square) {
+		this.square = square;
+	}
+
+	public int getCountShip() {
+		return countShip;
+	}
+
+	public void setCountShip(int countShip) {
+		this.countShip = countShip;
+	}
+
 }
