@@ -7,7 +7,6 @@ public class Main {
 		Game player2 = new Game();
 		
 		player1.start();
-		player2.start();
 	}
 
 }

@@ -5,7 +5,7 @@ public class Player {
 	private String symbolValue;
 	
 	public Player(){
-		
+
 	}
 	
 	public Player(String name,String symbolValue){

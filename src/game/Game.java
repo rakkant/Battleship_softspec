@@ -11,14 +11,16 @@ import network.Network;
 
 public class Game extends PApplet {
 
-	private PImage bg, canoe, boat, ferrari,readyBtn;
+	private PImage bg, canoe, boat, ferrari,readyBtn,player1Btn,player2Btn;
 	private int x, y, sizeBoard = 68;
 	private boolean readyState = false;
+	private boolean player1State = false;
+	private boolean player2State = false;
 
 	private ArrayList<Ship> ships = new ArrayList<Ship>();
 	private Board b;
 	
-	public void start(){
+	public static void main(String[] args) {
 		PApplet.main("game.Game");
 	}
 
@@ -38,13 +40,14 @@ public class Game extends PApplet {
 		canoe = loadImage("image/ship2.png");
 		ferrari = loadImage("image/ship3.png");
 		readyBtn = loadImage("image/readyBtn.jpg");
-		image(bg,0,0);
+		player1Btn = loadImage("image/player1Btn.jpg");
+		player2Btn = loadImage("image/player2Btn.jpg");
 
-		ships.add(createShip(55, 590, boat));
-		ships.add(createShip(55, 680, boat));
-		ships.add(createShip(205, 600, canoe));
-		ships.add(createShip(295, 600, canoe));
-		ships.add(createShip(390, 600, ferrari));
+		ships.add(createShip(55, 550, boat));
+		ships.add(createShip(55, 620, boat));
+		ships.add(createShip(205, 550, canoe));
+		ships.add(createShip(295, 550, canoe));
+		ships.add(createShip(390, 550, ferrari));
 
 		for(Ship s : ships){
 			image(s.getImage(),s.getX(),s.getY());
@@ -90,7 +93,6 @@ public class Game extends PApplet {
 	@Override
 	public void mouseClicked() {
 		readyBtnAction("click");
-
 		super.mouseClicked();
 	}
 
@@ -106,6 +108,14 @@ public class Game extends PApplet {
 		if ( checkAllInField() && x >= 50 && x <= 544 && y >=600 && y <= 738){
 			readyState = true;
 			addShipToBoard();
+		}
+		if ( x >= 100 && x <= 100+player1Btn.getModifiedX2() && y >= 701 && y <= 701 + player1Btn.getModifiedY2()){
+			player1State = true;
+			System.out.println("player1Btn is clicked");
+		}
+		if ( x >= 350 && x <= 350+player2Btn.getModifiedX2() && y >= 701 && y <= 701 + player2Btn.getModifiedY2()){
+			player2State = true;
+			System.out.println("player2Btn is clicked");
 		}
 		super.mouseReleased();
 	}
@@ -133,6 +143,8 @@ public class Game extends PApplet {
 	public void draw() {
 		if ( !readyState){
 			image(bg,0,0);
+			image(player1Btn,100,700);
+			image(player2Btn,350,700);
 			for(Ship s : ships){
 				image(s.getImage(), s.getX(), s.getY());
 			}
