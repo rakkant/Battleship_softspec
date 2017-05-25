@@ -24,7 +24,7 @@ public class Game extends PApplet {
 
 	public void settings(){
 		size(640,800);
-		b  = new Board(8,7);
+		b  = new Board(7,8);
 	}
 
 	public Ship createShip(int x, int y, PImage img){

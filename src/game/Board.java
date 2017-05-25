@@ -6,21 +6,21 @@ public class Board {
 	private int square[][];
 
 	public Board(int sizeX, int sizeY){
-		square = new int [sizeY][sizeX];
-		for (int i = 0; i < sizeY ; i++)
-			for (int j = 0; j < sizeX ; j++)
+		square = new int [sizeX][sizeY];
+		for (int i = 0; i < sizeX ; i++)
+			for (int j = 0; j < sizeY ; j++)
 				square[i][j] = 0;
 	}
 
 	public void addShip(int x, int y, int sizeX, int sizeY){
 		System.out.println("X : " + x + "Y : "+ y + " sizeX : " + sizeX + " sizeY : " + sizeY);
-		for(int i = x; i < x+sizeY; i++){
-			for(int j = y; j < y+sizeX; j++){
-				square[i][j] = 1;
+		for(int j = y; j < y+sizeY; j++){
+			for(int i = x; i < x+sizeX; i++){
+				square[j][i] = 1;
 			}
 		}
 	}
-	
+
 	public String toString(){
 		String board = "";
 		for(int i = 0; i < square.length; i++){
