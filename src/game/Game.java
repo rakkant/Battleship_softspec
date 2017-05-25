@@ -10,7 +10,7 @@ import network.GameServer;
 import network.Network;
 
 public class Game extends PApplet {
-	
+
 	PImage bg, canoe, boat, ferrari,readyBtn;
 	int x, y, sizeBoard = 68;
 	boolean readyState = false;
@@ -20,7 +20,7 @@ public class Game extends PApplet {
 	public static void main(String [] args){
 		PApplet.main("game.Game");
 	}
-	
+
 	public void settings(){
 		size(640,800);
 	}
@@ -30,20 +30,20 @@ public class Game extends PApplet {
 	}
 
 	public void setup(){
-		
+
 		bg = loadImage("image/Bg.jpg");
 		boat = loadImage("image/ship.png");
 		canoe = loadImage("image/ship2.png");
 		ferrari = loadImage("image/ship3.png");
 		readyBtn = loadImage("image/readyBtn.jpg");
 		image(bg,0,0);
-		
+
 		ships.add(createShip(55, 590, boat));
 		ships.add(createShip(55, 680, boat));
 		ships.add(createShip(205, 600, canoe));
 		ships.add(createShip(295, 600, canoe));
 		ships.add(createShip(390, 600, ferrari));
-		
+
 		for(Ship s : ships){
 			image(s.getImage(),s.getX(),s.getY());
 		}
@@ -65,15 +65,17 @@ public class Game extends PApplet {
 	public void mousePressed() {
 		x = mouseX;
 		y = mouseY;
-		for(Ship s : ships){
-			if(!s.isClick()){
-				if(s.checkClick(mouseX, mouseY)){
-					break;
+		if ( !readyState ){
+			for(Ship s : ships){
+				if(!s.isClick()){
+					if(s.checkClick(mouseX, mouseY)){
+						break;
+					}
 				}
 			}
+			readyBtnAction("click");
+			super.mousePressed();
 		}
-		readyBtnAction("click");
-		super.mousePressed();
 	}
 
 	public void printStatus(){
@@ -82,11 +84,11 @@ public class Game extends PApplet {
 		}
 		System.out.println();
 	}
-	
+
 	@Override
 	public void mouseClicked() {
 		readyBtnAction("click");
-		
+
 		super.mouseClicked();
 	}
 
@@ -99,12 +101,12 @@ public class Game extends PApplet {
 			s.setClick(false);
 		}
 		readyBtnAction("release");
-		if ( x >= 50 && x <= 544 && y >=600 && y <= 738){
+		if ( checkAllInField() && x >= 50 && x <= 544 && y >=600 && y <= 738){
 			readyState = true;
 		}
 		super.mouseReleased();
 	}
-	
+
 	public void readyBtnAction(String state){
 		if(mouseX <= readyBtn.getModifiedX2() + 50 && mouseY <= readyBtn.getModifiedY2() + 600 && mouseX >= 50 && mouseY >= 600){
 			if(state.equals("click")){
@@ -132,14 +134,14 @@ public class Game extends PApplet {
 			bg = loadImage("image/Bg2.jpg");
 			image(bg,0,0);
 		}
-//		readyBtnAction("hover");
+		//		readyBtnAction("hover");
 	}
 
 
 	public void moveBoat(Ship s){
 		s.move(mouseX - x,mouseY- y);
 	}
-	
+
 	public void magnetShip(Ship s){
 		int startPointX = 48, startPointY = 54;
 		boolean checkInField = false;
@@ -155,9 +157,9 @@ public class Game extends PApplet {
 			startPointX += sizeBoard;
 		}
 		if(!checkInField) s.setStartPosition();
-		
+
 	}
-	
+
 	public boolean checkAllInField(){
 		int count = 0;
 		for (Ship s : ships){
@@ -168,5 +170,5 @@ public class Game extends PApplet {
 			return true;
 		else return false;
 	}
-	
+
 }
