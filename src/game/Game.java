@@ -1,5 +1,7 @@
 package game;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JButton;
 
@@ -9,21 +11,46 @@ import network.GameClient;
 import network.GameServer;
 import network.Network;
 
-public class Game extends PApplet {
+public class Game extends PApplet implements Observer {
 
+	
 	private PImage bg, canoe, boat, ferrari,readyBtn,player1Btn,player2Btn;
 	private int x, y, sizeBoard = 68;
+
+	private GameLogic gameLogic ; 
 	private boolean readyState = false;
 	private boolean player1State = false;
 	private boolean player2State = false;
-
+	
+	private GameServer gameServer;
+	private GameClient gameClient;
+	private boolean isServer;
+	private boolean isClient;
+	
 	private ArrayList<Ship> ships = new ArrayList<Ship>();
 	private Board b;
+
 	
-	public static void main(String[] args) {
-		PApplet.main("game.Game");
+	public void start(){
+		gameLogic = new GameLogic();
+		gameServer = new GameServer();
+		gameServer.addObserver(this);
+		gameClient = new GameClient();
+		gameClient.addObserver(this);
 	}
 
+	public void startServer() {
+		gameServer.start();
+		isServer = true;
+		
+	}
+
+	public void startClient() {
+		gameClient.connect();
+		isClient = true;
+	}
+
+	
 	public void settings(){
 		size(640,800);
 		b  = new Board(7,8);
@@ -112,10 +139,13 @@ public class Game extends PApplet {
 		if ( x >= 100 && x <= 100+player1Btn.getModifiedX2() && y >= 701 && y <= 701 + player1Btn.getModifiedY2()){
 			player1State = true;
 			System.out.println("player1Btn is clicked");
+			startServer();
+			
 		}
 		if ( x >= 350 && x <= 350+player2Btn.getModifiedX2() && y >= 701 && y <= 701 + player2Btn.getModifiedY2()){
 			player2State = true;
 			System.out.println("player2Btn is clicked");
+			startClient();
 		}
 		super.mouseReleased();
 	}
@@ -214,5 +244,17 @@ public class Game extends PApplet {
 			return true;
 		else return false;
 	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		if(!(arg instanceof GameLogic)){
+			gameLogic.start();
+		}else{
+			gameLogic = (GameLogic) arg;
+		}
+		
+	}
+	
+	
 
 }
