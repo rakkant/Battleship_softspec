@@ -11,8 +11,9 @@ import network.Network;
 
 public class Game extends PApplet {
 	
-	PImage bg1, bg2, canoe, boat, ferrari,readyBtn;
+	PImage bg, canoe, boat, ferrari,readyBtn;
 	int x, y, sizeBoard = 68;
+	boolean readyState = false;
 
 	ArrayList<Ship> ships = new ArrayList<Ship>();
 
@@ -22,7 +23,6 @@ public class Game extends PApplet {
 	
 	public void settings(){
 		size(640,800);
-		//		bg2 = loadImage("image/Bg2.jpg");
 	}
 
 	public Ship createShip(int x, int y, PImage img){
@@ -31,12 +31,12 @@ public class Game extends PApplet {
 
 	public void setup(){
 		
-		bg1 = loadImage("image/Bg.jpg");
+		bg = loadImage("image/Bg.jpg");
 		boat = loadImage("image/ship.png");
 		canoe = loadImage("image/ship2.png");
 		ferrari = loadImage("image/ship3.png");
 		readyBtn = loadImage("image/readyBtn.jpg");
-		image(bg1,0,0);
+		image(bg,0,0);
 		
 		ships.add(createShip(55, 590, boat));
 		ships.add(createShip(55, 680, boat));
@@ -72,6 +72,7 @@ public class Game extends PApplet {
 				}
 			}
 		}
+		
 		super.mousePressed();
 	}
 
@@ -80,6 +81,14 @@ public class Game extends PApplet {
 			System.out.print(s.isClick() + " ");
 		}
 		System.out.println();
+	}
+	
+	@Override
+	public void mouseClicked() {
+		if ( checkAllInField() && x >= 50 && x <= 544 && y >=600 && y <= 738){
+			readyState = true;
+		}
+		super.mouseClicked();
 	}
 
 	@Override
@@ -95,22 +104,28 @@ public class Game extends PApplet {
 
 	@Override
 	public void draw() {
-		image(bg1,0,0);
+		if ( !readyState){
+		image(bg,0,0);
 		for(Ship s : ships){
 			image(s.getImage(), s.getX(), s.getY());
 		}
 		
 		if ( checkAllInField() ){
 			image(readyBtn,50,600);
+			}
+		}
+		else {
+			bg = loadImage("image/Bg2.jpg");
+			image(bg,0,0);
 		}
 	}
+
 
 	public void moveBoat(Ship s){
 		s.move(mouseX - x,mouseY- y);
 	}
 	
 	public void magnetShip(Ship s){
-		
 		int startPointX = 48, startPointY = 54;
 		boolean checkInField = false;
 		for(int i=0; i <= 8 - s.getSizeBoatX() && !checkInField; i++){
@@ -118,7 +133,6 @@ public class Game extends PApplet {
 				if(s.getX() >= startPointX && s.getY() >= startPointY && s.getX() < startPointX+sizeBoard && s.getY() < startPointY+sizeBoard){
 					s.setMagnet(startPointX, startPointY);
 					checkInField = true;
-			
 				}
 				startPointY += sizeBoard;
 			}
