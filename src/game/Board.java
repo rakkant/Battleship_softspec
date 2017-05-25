@@ -25,6 +25,7 @@ public class Board {
 	public void destroy(int x, int y){
 		square[x][y] = -1;
 		countShip -= 1;
+		System.out.println("Destroy at : " + x + ", " + y);
 	}
 	
 	public boolean checkShip(int x, int y){
