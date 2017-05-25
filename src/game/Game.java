@@ -17,8 +17,8 @@ public class Game extends PApplet {
 
 	private ArrayList<Ship> ships = new ArrayList<Ship>();
 	private Board b;
-
-	public static void main(String [] args){
+	
+	public void start(){
 		PApplet.main("game.Game");
 	}
 
