@@ -11,11 +11,12 @@ import network.Network;
 
 public class Game extends PApplet {
 
-	PImage bg, canoe, boat, ferrari,readyBtn;
-	int x, y, sizeBoard = 68;
-	boolean readyState = false;
+	private PImage bg, canoe, boat, ferrari,readyBtn;
+	private int x, y, sizeBoard = 68;
+	private boolean readyState = false;
 
-	ArrayList<Ship> ships = new ArrayList<Ship>();
+	private ArrayList<Ship> ships = new ArrayList<Ship>();
+	private Board b;
 
 	public static void main(String [] args){
 		PApplet.main("game.Game");
@@ -23,6 +24,7 @@ public class Game extends PApplet {
 
 	public void settings(){
 		size(640,800);
+		b  = new Board(8,7);
 	}
 
 	public Ship createShip(int x, int y, PImage img){
@@ -103,8 +105,16 @@ public class Game extends PApplet {
 		readyBtnAction("release");
 		if ( checkAllInField() && x >= 50 && x <= 544 && y >=600 && y <= 738){
 			readyState = true;
+			addShipToBoard();
 		}
 		super.mouseReleased();
+	}
+	
+	public void addShipToBoard(){
+		for(Ship s : ships){
+			b.addShip(s.getBoardPosX(), s.getBoardPosY(), s.getSizeBoatX(), s.getSizeBoatY());
+		}
+		System.out.println(b.toString());
 	}
 
 	public void readyBtnAction(String state){
@@ -148,7 +158,8 @@ public class Game extends PApplet {
 		for(int i=0; i <= 8 - s.getSizeBoatX() && !checkInField; i++){
 			for(int j=0; j <= 7 - s.getSizeBoatY() && !checkInField; j++){
 				if(s.getX() >= startPointX && s.getY() >= startPointY && s.getX() < startPointX+sizeBoard && s.getY() < startPointY+sizeBoard){
-					s.setMagnet(startPointX, startPointY);
+					s.setMagnet(startPointX, startPointY, i, j);
+					System.out.println(s.getBoardPosX() + " : " + s.getBoardPosY() + " size : " + s.getSizeBoatX() + "," + s.getSizeBoatY());
 					checkInField = true;
 				}
 				startPointY += sizeBoard;
@@ -157,7 +168,6 @@ public class Game extends PApplet {
 			startPointX += sizeBoard;
 		}
 		if(!checkInField) s.setStartPosition();
-
 	}
 
 	public boolean checkAllInField(){

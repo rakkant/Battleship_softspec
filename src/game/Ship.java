@@ -4,7 +4,7 @@ import processing.core.PImage;
 
 public class Ship extends PApplet {
 
-    private int x, y, sizeBoatX = 0, sizeBoatY = 0, startPositionX, startPositionY;
+    private int x, y, sizeBoatX = 0, sizeBoatY = 0, startPositionX, startPositionY, boardPosX, boardPosY;
     private boolean status, click, inField;
     PImage img;
 
@@ -17,10 +17,8 @@ public class Ship extends PApplet {
     }
     
     public boolean checkClick(int mouseX, int mouseY){
-    	if(getX() + getImage().getModifiedX2() >= mouseX && getY()+ getImage().getModifiedY2() >= mouseY && getX() <= mouseX && getY() <= mouseY){
+    	if(getX() + getImage().getModifiedX2() >= mouseX && getY()+ getImage().getModifiedY2() >= mouseY && getX() <= mouseX && getY() <= mouseY)
     		setClick(true);
-    		System.out.println(" Click change true ");
-		}
     	return isClick();
     }
     
@@ -29,9 +27,11 @@ public class Ship extends PApplet {
     	setY(getY() + y);
     }
     
-    public void setMagnet(int x, int y){
+    public void setMagnet(int x, int y, int posX, int posY){
     	setX(x);
     	setY(y);
+    	setBoardPosX(posX);
+    	setBoardPosY(posY);
     	inField = true;
     }
     
@@ -104,4 +104,22 @@ public class Ship extends PApplet {
 	public void setInField(boolean inField) {
 		this.inField = inField;
 	}
+
+	public int getBoardPosX() {
+		return boardPosX;
+	}
+
+	public void setBoardPosX(int boardPosX) {
+		this.boardPosX = boardPosX;
+	}
+
+	public int getBoardPosY() {
+		return boardPosY;
+	}
+
+	public void setBoardPosY(int boardPosY) {
+		this.boardPosY = boardPosY;
+	}
+	
+	
 }

@@ -3,24 +3,38 @@ package game;
  * Created by nune on 5/20/2017 AD.
  */
 public class Board {
-		private int size;
-		private int square[][];
-		
-		public Board(int size){
-			this.size = size;
-			square = new int [size][size];
-			for (int i = 0; i < size ; i++){
-				for (int j = 0; j < size ; j++){
-					
-				}
+	private int square[][];
+
+	public Board(int sizeX, int sizeY){
+		square = new int [sizeY][sizeX];
+		for (int i = 0; i < sizeY ; i++)
+			for (int j = 0; j < sizeX ; j++)
+				square[i][j] = 0;
+	}
+
+	public void addShip(int x, int y, int sizeX, int sizeY){
+		System.out.println("X : " + x + "Y : "+ y + " sizeX : " + sizeX + " sizeY : " + sizeY);
+		for(int i = x; i < x+sizeY; i++){
+			for(int j = y; j < y+sizeX; j++){
+				square[i][j] = 1;
 			}
 		}
-		
-		public int getSize(){
-			return size;
+	}
+	
+	public String toString(){
+		String board = "";
+		for(int i = 0; i < square.length; i++){
+			for(int j = 0; j < square[i].length; j++){
+				if(square[i][j] == 1)
+					board += "T ";
+				else if (square[i][j] == -1)
+					board += "F ";
+				else 
+					board += "0 ";
+			}
+			board += "\n";
 		}
-		
-		
-		
-		
+		System.out.println();
+		return board;
+	}
 }
