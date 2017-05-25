@@ -72,7 +72,7 @@ public class Game extends PApplet {
 				}
 			}
 		}
-		
+		readyBtnAction("click");
 		super.mousePressed();
 	}
 
@@ -85,9 +85,8 @@ public class Game extends PApplet {
 	
 	@Override
 	public void mouseClicked() {
-		if ( checkAllInField() && x >= 50 && x <= 544 && y >=600 && y <= 738){
-			readyState = true;
-		}
+		readyBtnAction("click");
+		
 		super.mouseClicked();
 	}
 
@@ -99,25 +98,41 @@ public class Game extends PApplet {
 			}
 			s.setClick(false);
 		}
+		readyBtnAction("release");
+		if ( x >= 50 && x <= 544 && y >=600 && y <= 738){
+			readyState = true;
+		}
 		super.mouseReleased();
+	}
+	
+	public void readyBtnAction(String state){
+		if(mouseX <= readyBtn.getModifiedX2() + 50 && mouseY <= readyBtn.getModifiedY2() + 600 && mouseX >= 50 && mouseY >= 600){
+			if(state.equals("click")){
+				readyBtn = loadImage("image/readyBtn_click.jpg");
+			} else if (state.equals("hover")){
+				readyBtn = loadImage("image/readyBtn_hover.jpg");
+			} else {
+				readyBtn = loadImage("image/readyBtn.jpg");
+			}
+		}
 	}
 
 	@Override
 	public void draw() {
 		if ( !readyState){
-		image(bg,0,0);
-		for(Ship s : ships){
-			image(s.getImage(), s.getX(), s.getY());
-		}
-		
-		if ( checkAllInField() ){
-			image(readyBtn,50,600);
+			image(bg,0,0);
+			for(Ship s : ships){
+				image(s.getImage(), s.getX(), s.getY());
 			}
+
+			if (checkAllInField())
+				image(readyBtn,50,600);
 		}
 		else {
 			bg = loadImage("image/Bg2.jpg");
 			image(bg,0,0);
 		}
+//		readyBtnAction("hover");
 	}
 
 
@@ -149,9 +164,8 @@ public class Game extends PApplet {
 			if (s.isInField())
 				count++;
 		}
-		if (count == ships.size()) {
+		if (count == ships.size())
 			return true;
-		}
 		else return false;
 	}
 	

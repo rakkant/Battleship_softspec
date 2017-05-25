@@ -38,6 +38,7 @@ public class Ship extends PApplet {
     public void setStartPosition(){
     	setX(getStartPositionX());
     	setY(getStartPositionY());
+    	inField = false;
     }
     
     public boolean isStatus() {
@@ -103,11 +104,4 @@ public class Ship extends PApplet {
 	public void setInField(boolean inField) {
 		this.inField = inField;
 	}
-	
-
-	
-	
-	
-    
-    
 }
