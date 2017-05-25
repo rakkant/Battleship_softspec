@@ -4,6 +4,7 @@ package game;
  */
 public class Board {
 	private int square[][];
+	private int countShip = 0;
 
 	public Board(int sizeX, int sizeY){
 		square = new int [sizeX][sizeY];
@@ -13,14 +14,31 @@ public class Board {
 	}
 
 	public void addShip(int x, int y, int sizeX, int sizeY){
-		System.out.println("X : " + x + "Y : "+ y + " sizeX : " + sizeX + " sizeY : " + sizeY);
+		countShip += sizeX*sizeY;
 		for(int j = y; j < y+sizeY; j++){
 			for(int i = x; i < x+sizeX; i++){
 				square[j][i] = 1;
 			}
 		}
 	}
-
+	
+	public void destroy(int x, int y){
+		square[x][y] = -1;
+		countShip -= 1;
+	}
+	
+	public boolean checkShip(int x, int y){
+		if(square[x][y] == 1)
+			return true;
+		return false;
+	}
+	
+	public boolean isWin(){
+		if(countShip == 0)
+			return true;
+		return false;
+	}
+	
 	public String toString(){
 		String board = "";
 		for(int i = 0; i < square.length; i++){
