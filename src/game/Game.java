@@ -75,10 +75,10 @@ public class Game extends PApplet implements Observer {
 	}
 
 	public void addShip(String status){
-//		gameLogic.addShip(new Boat(55, 550, boat), status);
-//		gameLogic.addShip(new Canoe(55, 620, boat), status);
-//		gameLogic.addShip(new Canoe(205, 550, canoe), status);
-//		gameLogic.addShip(new Canoe(295, 550, canoe), status);
+		gameLogic.addShip(new Boat(55, 550, boat), status);
+		gameLogic.addShip(new Canoe(55, 620, boat), status);
+		gameLogic.addShip(new Canoe(205, 550, canoe), status);
+		gameLogic.addShip(new Canoe(295, 550, canoe), status);
 		gameLogic.addShip(new Ferrari(390, 550, ferrari), status);
 	}
 

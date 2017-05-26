@@ -10,7 +10,7 @@ public class GameLogic {
 	private ArrayList<Ship> shipLists1, shipLists2;
 	private Board[] boardList;
 	private ArrayList[] allPlayer;
-	private int checkReady = 0;
+	private int checkReady = 0, checkShip = 0;
 
 	private static int turn = 0;
 	private static boolean checkCreateServer;
@@ -51,8 +51,11 @@ public class GameLogic {
 	}
 
 	public void addShip(Ship s, String status){
-		int turn = (status.equals("server")) ? 0 : 1;
-		((ArrayList<Ship>) allPlayer[turn]).add(s);
+		if(checkShip != 10){
+			int turn = (status.equals("server")) ? 0 : 1;
+			((ArrayList<Ship>) allPlayer[turn]).add(s);
+			checkShip += 1;
+		}
 	}
 
 	public void addShipToBoard(String status){
@@ -141,7 +144,7 @@ public class GameLogic {
 		}
 		return true;
 	}
-	
+
 	public String checkLose(){
 		if(boardList[0].isLose())
 			return "client";
@@ -149,7 +152,7 @@ public class GameLogic {
 			return "server";
 		return "noWin";
 	}
-	
+
 	public void ready(){
 		this.checkReady += 1;
 	}
@@ -175,8 +178,8 @@ public class GameLogic {
 	public void setCheckReady(int checkReady) {
 		this.checkReady = checkReady;
 	}
-	
-	
-	
+
+
+
 
 }
