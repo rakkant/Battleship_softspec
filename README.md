@@ -37,6 +37,7 @@ Note: We used Processing https://processing.org as the library sources in this p
   - Game Logic
   
 
-![alt text](http://imgur.com/a/6UpcP)
+![Alt text](http://imgur.com/a/6UpcP "Committing")
+
 This image describes committing of each members. 
 *(Rakkant and Rakkan Tiasakul are the same contributer.)*
