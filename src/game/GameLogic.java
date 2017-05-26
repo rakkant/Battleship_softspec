@@ -119,13 +119,14 @@ public class GameLogic {
 		return null;
 	}
 
-	public void shoot(int[] position, String status){
+	public boolean shoot(int[] position, String status){
 		int turn = (status.equals("server")) ? 1 : 0;
-		if(position != null)
-			boardList[turn].destroy(position[0], position[1]);
-		else 
+		if(position != null){
+			return boardList[turn].destroy(position[0], position[1]);
+		} else
 			System.out.println("Miss");
 		turn++;
+		return false;
 		//		b.destroy(x, y);
 		//		System.out.println("Shoot missle at : "+ x + " ," + y);
 	}

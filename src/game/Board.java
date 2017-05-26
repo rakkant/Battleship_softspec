@@ -21,25 +21,29 @@ public class Board {
 			}
 		}
 	}
-	
-	public void destroy(int x, int y){
+
+	public boolean destroy(int x, int y){
+		if(checkShip(x, y)){
+			countShip -= 1;
+			return true;
+		}
 		square[x][y] = -1;
-		countShip -= 1;
 		System.out.println("Destroy at : " + x + ", " + y);
+		return false;
 	}
-	
+
 	public boolean checkShip(int x, int y){
 		if(square[x][y] == 1)
 			return true;
 		return false;
 	}
-	
+
 	public boolean isWin(){
 		if(countShip == 0)
 			return true;
 		return false;
 	}
-	
+
 	public String toString(){
 		String board = "";
 		for(int i = 0; i < square.length; i++){

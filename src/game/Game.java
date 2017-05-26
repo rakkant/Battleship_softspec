@@ -12,7 +12,8 @@ public class Game extends PApplet implements Observer {
 
 	private PImage bg, canoe, boat, ferrari,readyBtn,player1Btn,player2Btn;
 	private boolean readyState, player1State, player2State, isServer, isClient;
-	private int x, y;
+	private int x, y,count = 0;
+	private int shootField[][];
 
 	private GameLogic gameLogic;
 	private GameServer gameServer;
@@ -26,6 +27,12 @@ public class Game extends PApplet implements Observer {
 		gameClient = new GameClient();
 		gameClient.addObserver(this);
 
+		shootField = new int [8][7];
+		for(int i = 0; i< shootField[0].length; i++){
+			for(int j = 0; j < shootField.length; j++){
+				shootField[j][i] = 0;
+			}
+		}
 		readyState = false;
 	}
 
@@ -64,10 +71,10 @@ public class Game extends PApplet implements Observer {
 
 	public void addShip(String status){
 		gameLogic.addShip(new Boat(55, 550, boat), status);
-		gameLogic.addShip(new Canoe(55, 620, boat), status);
-		gameLogic.addShip(new Canoe(205, 550, canoe), status);
-		gameLogic.addShip(new Canoe(295, 550, canoe), status);
-		gameLogic.addShip(new Ferrari(390, 550, ferrari), status);
+		//		gameLogic.addShip(new Canoe(55, 620, boat), status);
+		//		gameLogic.addShip(new Canoe(205, 550, canoe), status);
+		//		gameLogic.addShip(new Canoe(295, 550, canoe), status);
+		//		gameLogic.addShip(new Ferrari(390, 550, ferrari), status);
 	}
 
 	@Override
@@ -82,24 +89,36 @@ public class Game extends PApplet implements Observer {
 	public void mousePressed() {
 		x = mouseX;
 		y = mouseY;
+		shoot();
 		if ( !readyState ){
 			gameLogic.setClick(mouseX, mouseY, getStatus());
 			readyBtnAction("click");
 			super.mousePressed();
 		}
 	}
+	
+	public void shoot(){
+		if(readyState && count == 1){
 
-	@Override
-	public void mouseClicked() {
-		readyBtnAction("click");
-		if(readyState){
-			gameLogic.shoot(gameLogic.checkPositionShoot(mouseX, mouseY), getStatus());
+			System.out.println("HEREEEEE");
+			int[] posShoot = gameLogic.checkPositionShoot(mouseX, mouseY);
+
 			System.out.println("Shot !");
+			if (gameLogic.shoot(posShoot, getStatus())) {
+				shootField[posShoot[0]][posShoot[1]] = -1;
+			} else {
+				shootField[posShoot[0]][posShoot[1]] = 1;
+			}
+			
 			//			gameLogic.shoot(0, 0, getStatus());
-			//			gameServer.send(gameLogic);
-			//			gameClient.send(gameLogic);
+//			gameServer.send(gameLogic);
+//			gameClient.send(gameLogic);
 		}
-		super.mouseClicked();
+		else if (readyState && count == 0)
+		{
+			count =1;
+		}
+		
 	}
 
 	@Override
@@ -164,16 +183,35 @@ public class Game extends PApplet implements Observer {
 			bg = loadImage("image/Bg2.jpg");
 			image(bg, 0, 0);
 			drawPreviewField();
+			drawField();
 		}
 	}
 
 	private void drawAllShip(){
-		System.out.println("draw at " + getStatus());
 		for(Ship s : gameLogic.getShipLists(getStatus())){
 			image(s.getImage(), s.getX(), s.getY());
 		}
 	}
 
+	private void drawField(){
+		int posX = 49, posY = 56;
+		for ( int i = 0 ; i < shootField[0].length ; i++){
+			for ( int j = 0 ; j < shootField.length ; j++){
+				if ( shootField[j][i] == 1 )
+					fill(46, 204, 113);
+				else if ( shootField[j][i] == -1)
+					fill(230, 126, 34);
+				else
+					noFill();
+				noStroke();
+				rect(posX, posY, 65, 65);
+				posY += 68;
+			}
+			posX+= 68;
+			posY = 56;
+		}
+
+	}
 	private void drawPreviewField(){
 		int posX = 45, posY = 570;
 		noStroke();
