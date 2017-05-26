@@ -130,12 +130,21 @@ public class Game extends PApplet implements Observer {
 	public void draw() {
 		if (!readyState){
 			image(bg, 0, 0);
-			drawAllShip();
-			if (gameLogic.checkAllShipInField()){ 
-				image(readyBtn,50,600);
-			} else {
+			if ( !player1State && !player2State ){
 				image(player1Btn, 100, 700);
 				image(player2Btn, 350, 700);
+			}
+			else {
+				if ( player1State ){
+					image(player1Btn, 100, 700);
+				}
+				else if ( player2State){
+					image(player2Btn, 350, 700);
+				}
+				drawAllShip();
+				if (gameLogic.checkAllShipInField()){ 
+					image(readyBtn,50,600);
+				} 
 			}
 		} else {
 			bg = loadImage("image/Bg2.jpg");
