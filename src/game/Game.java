@@ -27,7 +27,7 @@ public class Game extends PApplet implements Observer {
 		gameClient = new GameClient();
 		gameClient.addObserver(this);
 
-		shootField = new int [8][7];
+		shootField = new int [7][8];
 		for(int i = 0; i< shootField[0].length; i++){
 			for(int j = 0; j < shootField.length; j++){
 				shootField[j][i] = 0;
@@ -100,10 +100,9 @@ public class Game extends PApplet implements Observer {
 	public void shoot(){
 		if(readyState && count == 1){
 
-			System.out.println("HEREEEEE");
 			int[] posShoot = gameLogic.checkPositionShoot(mouseX, mouseY);
 
-			System.out.println("Shot !");
+//			System.out.println("Shot !");
 			if (gameLogic.shoot(posShoot, getStatus())) {
 				shootField[posShoot[0]][posShoot[1]] = -1;
 			} else {
