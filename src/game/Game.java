@@ -104,7 +104,7 @@ public class Game extends PApplet implements Observer {
 	}
 
 	public void shoot(){
-		if(readyState && count == 1){
+		if(readyState ){
 
 			int[] posShoot = gameLogic.checkPositionShoot(mouseX, mouseY);
 			if (gameLogic.shoot(posShoot, getStatus()) )
@@ -114,10 +114,6 @@ public class Game extends PApplet implements Observer {
 
 			//			gameServer.send(gameLogic);
 			//			gameClient.send(gameLogic);
-		}
-		else if (readyState && count == 0)
-		{
-			count =1;
 		}
 
 	}
@@ -158,8 +154,12 @@ public class Game extends PApplet implements Observer {
 				readyBtn = loadImage("image/readyBtn_click.jpg");
 			else if (state.equals("hover"))
 				readyBtn = loadImage("image/readyBtn_hover.jpg");
-			else
+			else if ( state.equals("release")){
 				readyBtn = loadImage("image/readyBtn.jpg");
+				gameLogic.ready();
+			} else {
+				readyBtn = loadImage("image/readyBtn.jpg");
+			}
 		}
 	}
 
@@ -181,7 +181,9 @@ public class Game extends PApplet implements Observer {
 				}
 				drawAllShip();
 			}
+//			count=1;
 		} else {
+			System.out.println(gameLogic.getCheckReady());
 			bg = loadImage("image/Bg2.jpg");
 			image(bg, 0, 0);
 			drawPreviewField();
@@ -191,13 +193,13 @@ public class Game extends PApplet implements Observer {
 				image(freezeBg,0,0);
 			}
 			
-			if(getStatus().equals("client")){
+			if(getStatus().equals("client") && gameLogic.getCheckReady() == 2){
 				if(gameLogic.checkLose().equals("client"))
 					image(winBg, 0, 0);
 				else if (gameLogic.checkLose().equals("server"))
 					image(loseBg, 0, 0);
 				
-			} else if (getStatus().equals("server")){
+			} else if (getStatus().equals("server") && gameLogic.getCheckReady() == 2){
 				if(gameLogic.checkLose().equals("client"))
 					image(loseBg, 0, 0);
 				else if (gameLogic.checkLose().equals("server"))

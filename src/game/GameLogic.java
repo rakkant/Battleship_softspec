@@ -10,6 +10,7 @@ public class GameLogic {
 	private ArrayList<Ship> shipLists1, shipLists2;
 	private Board[] boardList;
 	private ArrayList[] allPlayer;
+	private int checkReady = 0;
 
 	private static int turn = 0;
 	private static boolean checkCreateServer;
@@ -148,6 +149,10 @@ public class GameLogic {
 			return "server";
 		return "noWin";
 	}
+	
+	public void ready(){
+		this.checkReady += 1;
+	}
 
 	public Board getB(String status) {
 		int turn = (status.equals("server")) ? 0 : 1;
@@ -162,6 +167,16 @@ public class GameLogic {
 	public static int getTurn() {
 		return turn;
 	}
+
+	public int getCheckReady() {
+		return checkReady;
+	}
+
+	public void setCheckReady(int checkReady) {
+		this.checkReady = checkReady;
+	}
+	
+	
 	
 
 }
