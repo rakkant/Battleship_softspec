@@ -25,10 +25,11 @@ public class Board {
 
 	public boolean destroy(int x, int y){
 		if(checkShip(x, y)){
+			square[x][y] = -1;
 			countShip -= 1;
 			return true;
 		}
-		square[x][y] = -1;
+		square[x][y] = -2;
 		System.out.println("Destroy at : " + x + ", " + y);
 		return false;
 	}

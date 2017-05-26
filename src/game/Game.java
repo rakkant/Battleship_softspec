@@ -108,10 +108,9 @@ public class Game extends PApplet implements Observer {
 			if (gameLogic.shoot(posShoot, getStatus())) {
 				shootField[posShoot[0]][posShoot[1]] = -1;
 			} else {
-				shootField[posShoot[0]][posShoot[1]] = 1;
+				shootField[posShoot[0]][posShoot[1]] = 2;
 			}
 			
-			//			gameLogic.shoot(0, 0, getStatus());
 //			gameServer.send(gameLogic);
 //			gameClient.send(gameLogic);
 		}
@@ -196,8 +195,8 @@ public class Game extends PApplet implements Observer {
 		int posX = 49, posY = 56;
 		for ( int i = 0 ; i < shootField[0].length ; i++){
 			for ( int j = 0 ; j < shootField.length ; j++){
-				if ( shootField[j][i] == 1 )
-					fill(46, 204, 113);
+				if ( shootField[j][i] == -2 )
+					fill(41, 128, 185);
 				else if ( shootField[j][i] == -1)
 					fill(230, 126, 34);
 				else
@@ -225,6 +224,8 @@ public class Game extends PApplet implements Observer {
 					fill(46, 204, 113);
 				else if ( array[j][i] == -1)
 					fill(230, 126, 34);
+				else if ( array[j][i] == -2)
+					fill(41, 128, 185);
 				else
 					noFill();
 
