@@ -13,7 +13,7 @@ public class Game extends PApplet implements Observer {
 	private PImage bg, canoe, boat, ferrari,readyBtn,player1Btn,player2Btn;
 	private boolean readyState, player1State, player2State, isServer, isClient;
 	private int x, y;
-
+	
 	private GameLogic gameLogic;
 	private GameServer gameServer;
 	private GameClient gameClient;
@@ -42,9 +42,14 @@ public class Game extends PApplet implements Observer {
 	public void settings(){
 		size(640,800);
 	}
+	
+	public String getStatus(){
+		if(isServer)
+			return "server";
+		return "client";
+	}
 
 	public void setup(){
-
 		bg = loadImage("image/Bg.jpg");
 		boat = loadImage("image/ship.png");
 		canoe = loadImage("image/ship2.png");
@@ -52,19 +57,22 @@ public class Game extends PApplet implements Observer {
 		readyBtn = loadImage("image/readyBtn.jpg");
 		player1Btn = loadImage("image/player1Btn.jpg");
 		player2Btn = loadImage("image/player2Btn.jpg");
-
-		gameLogic.addShip(new Boat(55, 550, boat));
-		gameLogic.addShip(new Canoe(55, 620, boat));
-		gameLogic.addShip(new Canoe(205, 550, canoe));
-		gameLogic.addShip(new Canoe(295, 550, canoe));
-		gameLogic.addShip(new Ferrari(390, 550, ferrari));
-
-		drawAllShip();
+		
+		addShip("server");
+		addShip("client");
+	}
+	
+	public void addShip(String status){
+		gameLogic.addShip(new Boat(55, 550, boat), status);
+		gameLogic.addShip(new Canoe(55, 620, boat), status);
+		gameLogic.addShip(new Canoe(205, 550, canoe), status);
+		gameLogic.addShip(new Canoe(295, 550, canoe), status);
+		gameLogic.addShip(new Ferrari(390, 550, ferrari), status);
 	}
 
 	@Override
 	public void mouseDragged() {
-		gameLogic.move(x, y, mouseX, mouseY);
+		gameLogic.move(x, y, mouseX, mouseY, getStatus());
 		x = mouseX;
 		y = mouseY;
 		super.mouseDragged();
@@ -75,7 +83,7 @@ public class Game extends PApplet implements Observer {
 		x = mouseX;
 		y = mouseY;
 		if ( !readyState ){
-			gameLogic.setClick(mouseX, mouseY);
+			gameLogic.setClick(mouseX, mouseY, getStatus());
 			readyBtnAction("click");
 			super.mousePressed();
 		}
@@ -85,9 +93,9 @@ public class Game extends PApplet implements Observer {
 	public void mouseClicked() {
 		readyBtnAction("click");
 		if(readyState){
-			gameLogic.shoot(0, 0);
-			gameServer.send(gameLogic);
-			gameClient.send(gameLogic);
+//			gameLogic.shoot(0, 0, getStatus());
+//			gameServer.send(gameLogic);
+//			gameClient.send(gameLogic);
 		}
 		super.mouseClicked();
 	}
@@ -95,12 +103,12 @@ public class Game extends PApplet implements Observer {
 	@Override
 	public void mouseReleased() {
 
-		gameLogic.magnetShip();
+		gameLogic.magnetShip(getStatus());
 		readyBtnAction("release");
 
-		if ( gameLogic.checkAllShipInField() && x >= 50 && x <= 544 && y >=600 && y <= 738){
+		if ( gameLogic.checkAllShipInField(getStatus()) && x >= 50 && x <= 544 && y >=600 && y <= 738){
 			readyState = true;
-			gameLogic.addShipToBoard();
+			gameLogic.addShipToBoard(getStatus());
 		}
 		if ( x >= 100 && x <= 100+player1Btn.getModifiedX2() && y >= 701 && y <= 701 + player1Btn.getModifiedY2()){
 			player1State = true;
@@ -142,7 +150,7 @@ public class Game extends PApplet implements Observer {
 					image(player2Btn, 350, 700);
 				}
 				drawAllShip();
-				if (gameLogic.checkAllShipInField()){ 
+				if (gameLogic.checkAllShipInField(getStatus())){ 
 					image(readyBtn,50,600);
 				} 
 			}
@@ -154,7 +162,8 @@ public class Game extends PApplet implements Observer {
 	}
 
 	private void drawAllShip(){
-		for(Ship s : gameLogic.getShipLists()){
+		System.out.println("draw at " + getStatus());
+		for(Ship s : gameLogic.getShipLists(getStatus())){
 			image(s.getImage(), s.getX(), s.getY());
 		}
 	}
@@ -165,7 +174,7 @@ public class Game extends PApplet implements Observer {
 		fill(161, 225, 234);
 		rect(35, 560, 220, 195, 10);
 		int [][] array = new int [8][7];
-		array = gameLogic.getB().getSquare();
+		array = gameLogic.getB(getStatus()).getSquare();
 
 		for(int i = 0; i < array[0].length; i++){
 			for(int j = 0; j < array.length; j++){

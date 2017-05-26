@@ -49,25 +49,30 @@ public class GameLogic {
 		this.turn = 0;
 	}
 
-	public void addShip(Ship s){
-		((ArrayList<Ship>) allPlayer[turn%2]).add(s);
+	public void addShip(Ship s, String status){
+		int turn = (status.equals("server")) ? 0 : 1;
+		((ArrayList<Ship>) allPlayer[turn]).add(s);
 	}
 
-	public void addShipToBoard(){
-		for(Ship s : (ArrayList<Ship>) allPlayer[turn%2]){
-			boardList[turn%2].addShip(s.getBoardPosX(), s.getBoardPosY(), s.getSizeBoatX(), s.getSizeBoatY());
+	public void addShipToBoard(String status){
+		System.out.println("Add ship to " + status);
+		int turn = (status.equals("server")) ? 0 : 1;
+		for(Ship s : (ArrayList<Ship>) allPlayer[turn]){
+			boardList[turn].addShip(s.getBoardPosX(), s.getBoardPosY(), s.getSizeBoatX(), s.getSizeBoatY());
 		}
 	}
 
-	public void move(int x, int y, int mouseX, int mouseY){
-		for(Ship s : (ArrayList<Ship>) allPlayer[turn%2]){
+	public void move(int x, int y, int mouseX, int mouseY, String status){
+		int turn = (status.equals("server")) ? 0 : 1;
+		for(Ship s : (ArrayList<Ship>) allPlayer[turn]){
 			if(s.isClick())
 				s.move(mouseX - x,mouseY- y);
 		}
 	}
 
-	public void magnetShip(){
-		for(Ship s : (ArrayList<Ship>) allPlayer[turn%2]){
+	public void magnetShip(String status){
+		int turn = (status.equals("server")) ? 0 : 1;
+		for(Ship s : (ArrayList<Ship>) allPlayer[turn]){
 			if(s.isClick()){
 				int startPointX = 48, startPointY = 54;
 				boolean checkInField = false;
@@ -89,35 +94,41 @@ public class GameLogic {
 		}
 	}
 
-	public void setClick(int mouseX, int mouseY){
-		for(Ship s : (ArrayList<Ship>) allPlayer[turn%2]){
+	public void setClick(int mouseX, int mouseY, String status){
+		System.out.println("set click at " + status);
+		int turn = (status.equals("server")) ? 0 : 1;
+		for(Ship s : (ArrayList<Ship>) allPlayer[turn]){
 			if(!s.isClick())
 				if(s.checkClick(mouseX, mouseY))
 					break;
 		}
 	}
 
-	public void shoot(int x, int y){
-		boardList[turn%2].destroy(x, y);
+	public void shoot(int x, int y, String status){
+		int turn = (status.equals("server")) ? 1 : 0;
+		boardList[turn].destroy(x, y);
 		turn++;
 		//		b.destroy(x, y);
 		//		System.out.println("Shoot missle at : "+ x + " ," + y);
 	}
 
-	public boolean checkAllShipInField(){
-		for(Ship s : (ArrayList<Ship>) allPlayer[turn%2]){
+	public boolean checkAllShipInField(String status){
+		int turn = (status.equals("server")) ? 0 : 1;
+		for(Ship s : (ArrayList<Ship>) allPlayer[turn]){
 			if(!s.isInField())
 				return false;
 		}
 		return true;
 	}
 
-	public Board getB() {
-		return boardList[turn%2];
+	public Board getB(String status) {
+		int turn = (status.equals("server")) ? 0 : 1;
+		return boardList[turn];
 	}
 
-	public ArrayList<Ship> getShipLists() {
-		return (ArrayList<Ship>) allPlayer[turn%2];
+	public ArrayList<Ship> getShipLists(String status) {
+		int turn = (status.equals("server")) ? 0 : 1;
+		return (ArrayList<Ship>) allPlayer[turn];
 	}
 
 }

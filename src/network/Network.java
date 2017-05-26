@@ -31,5 +31,6 @@ public static final int CONNECT = 1;
 		k.register(int[][].class);
 		k.register(int[].class);
 		k.register(java.util.ArrayList.class);
+		k.register(java.util.ArrayList[].class);
 	}
 }
