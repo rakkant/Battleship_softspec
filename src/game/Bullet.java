@@ -19,7 +19,6 @@ public class Bullet {
     }
 
     public int getX() {
-
         return x;
     }
 

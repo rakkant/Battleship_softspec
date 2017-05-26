@@ -93,6 +93,8 @@ public class Game extends PApplet implements Observer {
 	public void mouseClicked() {
 		readyBtnAction("click");
 		if(readyState){
+			gameLogic.shoot(gameLogic.checkPositionShoot(mouseX, mouseY), getStatus());
+			System.out.println("Shot !");
 //			gameLogic.shoot(0, 0, getStatus());
 //			gameServer.send(gameLogic);
 //			gameClient.send(gameLogic);
@@ -175,7 +177,7 @@ public class Game extends PApplet implements Observer {
 		rect(35, 560, 220, 195, 10);
 		int [][] array = new int [8][7];
 		array = gameLogic.getB(getStatus()).getSquare();
-
+		
 		for(int i = 0; i < array[0].length; i++){
 			for(int j = 0; j < array.length; j++){
 				if ( array[j][i] == 1 )

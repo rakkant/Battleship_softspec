@@ -103,7 +103,7 @@ public class GameLogic {
 					break;
 		}
 	}
-	
+
 	public int[] checkPositionShoot(int mouseX, int mouseY){
 		int posX = 48, posY = 54;
 		for(int i = 0; i <= 8; i++){
@@ -111,19 +111,25 @@ public class GameLogic {
 				if(mouseX >= posX && mouseY >= posY && mouseX < posX + SIZE_BOARD && mouseY < posY + SIZE_BOARD){
 					return new int[] {i ,j};
 				}
+				posY += SIZE_BOARD;
 			}
+			posY = 54;
+			posX += SIZE_BOARD;
 		}
 		return null;
 	}
 
-	public void shoot(int x, int y, String status){
+	public void shoot(int[] position, String status){
 		int turn = (status.equals("server")) ? 1 : 0;
-		boardList[turn].destroy(x, y);
+		if(position != null)
+			boardList[turn].destroy(position[0], position[1]);
+		else 
+			System.out.println("Miss");
 		turn++;
 		//		b.destroy(x, y);
 		//		System.out.println("Shoot missle at : "+ x + " ," + y);
 	}
-	
+
 
 	public boolean checkAllShipInField(String status){
 		int turn = (status.equals("server")) ? 0 : 1;
