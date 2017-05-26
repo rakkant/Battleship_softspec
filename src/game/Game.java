@@ -11,7 +11,7 @@ import network.GameServer;
 public class Game extends PApplet implements Observer {
 
 	private PImage bg, canoe, boat, ferrari, readyBtn, player1Btn, player2Btn, freezeBg;
-	private boolean readyState, player1State, player2State, isServer, isClient;
+	private boolean readyState, player1State, player2State, isServer, isClient, freeze;
 	private int x, y,count = 0;
 	private int shootField[][];
 
@@ -64,7 +64,7 @@ public class Game extends PApplet implements Observer {
 		readyBtn = loadImage("image/readyBtn.jpg");
 		player1Btn = loadImage("image/player1Btn.jpg");
 		player2Btn = loadImage("image/player2Btn.jpg");
-		
+
 		freezeBg = loadImage("image/freeze.png");
 
 		addShip("server");
@@ -91,31 +91,32 @@ public class Game extends PApplet implements Observer {
 	public void mousePressed() {
 		x = mouseX;
 		y = mouseY;
-		shoot();
+		if(freeze || ( gameLogic.getTurn()%2 == 0 && getStatus().equals("server") ) || (gameLogic.getTurn()%2 == 1 && getStatus().equals("client")))
+			shoot();
 		if ( !readyState ){
 			gameLogic.setClick(mouseX, mouseY, getStatus());
 			readyBtnAction("click");
 			super.mousePressed();
 		}
 	}
-	
+
 	public void shoot(){
 		if(readyState && count == 1){
 
 			int[] posShoot = gameLogic.checkPositionShoot(mouseX, mouseY);
-			if (gameLogic.shoot(posShoot, getStatus()))
+			if (gameLogic.shoot(posShoot, getStatus()) )
 				shootField[posShoot[0]][posShoot[1]] = -1;
-			else
+			else if (shootField[posShoot[0]][posShoot[1]] != -1 )
 				shootField[posShoot[0]][posShoot[1]] = -2;
-			
-//			gameServer.send(gameLogic);
-//			gameClient.send(gameLogic);
+
+			//			gameServer.send(gameLogic);
+			//			gameClient.send(gameLogic);
 		}
 		else if (readyState && count == 0)
 		{
 			count =1;
 		}
-		
+
 	}
 
 	@Override
@@ -128,17 +129,24 @@ public class Game extends PApplet implements Observer {
 			readyState = true;
 			gameLogic.addShipToBoard(getStatus());
 		}
-		if ( x >= 100 && x <= 100+player1Btn.getModifiedX2() && y >= 701 && y <= 701 + player1Btn.getModifiedY2()){
+		
+		if(checkBtnPlayerClick(player1Btn, 100, 701)){
 			player1State = true;
 			System.out.println("player1Btn is clicked");
 			startServer();
 		}
-		if ( x >= 350 && x <= 350+player2Btn.getModifiedX2() && y >= 701 && y <= 701 + player2Btn.getModifiedY2()){
+		if(checkBtnPlayerClick(player2Btn, 350, 701)){
 			player2State = true;
 			System.out.println("player2Btn is clicked");
 			startClient();
 		}
+		
 		super.mouseReleased();
+	}
+	public boolean checkBtnPlayerClick(PImage img, int posX, int posY){
+		if(mouseX >= posX && mouseX <= posX + img.getModifiedX2() && mouseY >= posY && mouseY <= posY + img.getModifiedY2())
+			return true;
+		return false;
 	}
 
 	public void readyBtnAction(String state){
@@ -175,10 +183,10 @@ public class Game extends PApplet implements Observer {
 			image(bg, 0, 0);
 			drawPreviewField();
 			drawField();
-			if (getStatus().equalsIgnoreCase("Server") && gameLogic.getTurn()%2 == 1)
+			if ( (getStatus().equalsIgnoreCase("Server") && gameLogic.getTurn()%2 == 1) || (getStatus().equalsIgnoreCase("client") && gameLogic.getTurn()%2 == 0)){
+				freeze = false;
 				image(freezeBg,0,0);
-			 if (getStatus().equalsIgnoreCase("client") && gameLogic.getTurn()%2 == 0)
-				image(freezeBg,0,0);
+			}
 		}
 	}
 
@@ -191,21 +199,21 @@ public class Game extends PApplet implements Observer {
 	private void drawField(){
 		drawRecOfField(65, 68, 49, 56, shootField, "field");
 	}
-	
+
 	private void drawPreviewField(){
 		noStroke();
 		fill(161, 225, 234);
 		rect(35, 560, 220, 195, 10);
 		drawRecOfField(24, 25, 45, 570, gameLogic.getB(getStatus()).getSquare(), "preview");
 	}
-	
+
 	public void drawRecOfField(int sizeBox, int sizeMove, int posX, int posY, int[][] field, String type){
 		int tempPosY = posY;
 		if(type.equals("preview"))
 			stroke(255, 255, 255);
 		else 
 			noStroke();
-		
+
 		for(int i = 0; i < field[0].length; i++){
 			for(int j = 0; j < field.length; j++){
 				if ( field[j][i] == 1 )
@@ -216,7 +224,7 @@ public class Game extends PApplet implements Observer {
 					fill(41, 128, 185);
 				else
 					noFill();
-	
+
 				rect(posX, posY, sizeBox, sizeBox);
 				posY += sizeMove;
 			}
