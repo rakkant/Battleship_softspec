@@ -2,21 +2,20 @@ package game;
 import processing.core.PApplet;
 import processing.core.PImage;
 
-public class Ship extends PApplet {
+public abstract class Ship extends PApplet {
 
     private int x, y, sizeBoatX = 0, sizeBoatY = 0, startPositionX, startPositionY, boardPosX, boardPosY;
     private boolean status, click, inField;
-    PImage img;
+    private PImage img;
 
-    public Ship(int x, int y, PImage img){
-        this.x = this.startPositionX = x;
-        this.y = this.startPositionY = y;
-        this.img = img;
+    public Ship(){
+//        this.x = this.startPositionX = x;
+//        this.y = this.startPositionY = y;
+//        this.img = img;
         this.status = true;
         this.click = false;
     }
-    
-    public boolean checkClick(int mouseX, int mouseY){
+	public boolean checkClick(int mouseX, int mouseY){
     	if(getX() + getImage().getModifiedX2() >= mouseX && getY()+ getImage().getModifiedY2() >= mouseY && getX() <= mouseX && getY() <= mouseY)
     		setClick(true);
     	return isClick();
@@ -73,6 +72,10 @@ public class Ship extends PApplet {
         this.x = x;
     }
     
+    public PImage setImage(PImage img){
+    	return this.img = img;
+    }
+    
     public PImage getImage(){
     	return img;
     }
@@ -121,5 +124,11 @@ public class Ship extends PApplet {
 		this.boardPosY = boardPosY;
 	}
 	
-	
+    public void setStartPositionX(int startPositionX) {
+		this.startPositionX = startPositionX;
+	}
+
+	public void setStartPositionY(int startPositionY) {
+		this.startPositionY = startPositionY;
+	}
 }

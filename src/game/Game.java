@@ -15,6 +15,8 @@ public class Game extends PApplet implements Observer {
 
 	private int x, y;
 	private int shootField[][];
+	
+	private ConcreteShip concreteShip;
 
 	private GameLogic gameLogic;
 	private GameServer gameServer;
@@ -58,6 +60,8 @@ public class Game extends PApplet implements Observer {
 	}
 
 	public void setup(){
+		concreteShip = new ConcreteShip();
+		
 		bg = loadImage("image/Bg.jpg");
 		boat = loadImage("image/ship.png");
 		canoe = loadImage("image/ship2.png");
@@ -75,11 +79,11 @@ public class Game extends PApplet implements Observer {
 	}
 
 	public void addShip(String status){
-		gameLogic.addShip(new Boat(55, 550, boat), status);
-		gameLogic.addShip(new Canoe(55, 620, boat), status);
-		gameLogic.addShip(new Canoe(205, 550, canoe), status);
-		gameLogic.addShip(new Canoe(295, 550, canoe), status);
-		gameLogic.addShip(new Ferrari(390, 550, ferrari), status);
+		gameLogic.addShip(new Boat(concreteShip, boat, 55, 550), status);
+		gameLogic.addShip(new Boat(concreteShip, boat, 55, 620), status);
+		gameLogic.addShip(new Canoe(concreteShip, canoe, 205, 550), status);
+		gameLogic.addShip(new Canoe(concreteShip, canoe, 295, 550), status);
+		gameLogic.addShip(new Ferrari(concreteShip, ferrari, 390, 550), status);
 	}
 
 	@Override
