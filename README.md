@@ -20,4 +20,12 @@
 - Singleton
 - Decorator
 
+## Principles
+- Single Responsibility Principle : Each classes take responsible of themselves. 
+- Open/closed Principle : There're classes which use "Extends" , and they could be modified too.
+
 ## Members' role
+- Rakkan Tiasakul 5810546013 : 
+- Jirayuth Leeupathumwong 5810546616 :
+- Tunya Wittayasiripaiboon 5810546676 : 
+
