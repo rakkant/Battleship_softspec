@@ -10,7 +10,7 @@ import network.GameServer;
 
 public class Game extends PApplet implements Observer {
 
-	private PImage bg, canoe, boat, ferrari,readyBtn,player1Btn,player2Btn;
+	private PImage bg, canoe, boat, ferrari, readyBtn, player1Btn, player2Btn, freezeBg;
 	private boolean readyState, player1State, player2State, isServer, isClient;
 	private int x, y,count = 0;
 	private int shootField[][];
@@ -64,6 +64,8 @@ public class Game extends PApplet implements Observer {
 		readyBtn = loadImage("image/readyBtn.jpg");
 		player1Btn = loadImage("image/player1Btn.jpg");
 		player2Btn = loadImage("image/player2Btn.jpg");
+		
+		freezeBg = loadImage("image/freeze.png");
 
 		addShip("server");
 		addShip("client");
@@ -161,28 +163,28 @@ public class Game extends PApplet implements Observer {
 			if ( !player1State && !player2State ){
 				image(player1Btn, 100, 700);
 				image(player2Btn, 350, 700);
-			}
-			else {
-				if (gameLogic.checkAllShipInField(getStatus())){ 
+			} else {
+				if (gameLogic.checkAllShipInField(getStatus()))
 					image(readyBtn,50,600);
-				} 
 				else { 
-					if ( player1State ){
-
+					if ( player1State )
 						image(player1Btn, 100, 700);
-					}
-					if ( player2State){
+					if ( player2State)
 						image(player2Btn, 350, 700);
-					}
 				}
 				drawAllShip();
-
 			}
 		} else {
 			bg = loadImage("image/Bg2.jpg");
 			image(bg, 0, 0);
 			drawPreviewField();
 			drawField();
+			if (getStatus().equalsIgnoreCase("Server") && gameLogic.getTurn()%2 == 1)
+				image(freezeBg,0,0);
+			 if (getStatus().equalsIgnoreCase("client") && gameLogic.getTurn()%2 == 0)
+				image(freezeBg,0,0);
+			 
+		
 		}
 	}
 

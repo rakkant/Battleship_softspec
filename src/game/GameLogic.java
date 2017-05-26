@@ -151,4 +151,9 @@ public class GameLogic {
 		return (ArrayList<Ship>) allPlayer[turn];
 	}
 
+	public static int getTurn() {
+		return turn;
+	}
+	
+
 }
