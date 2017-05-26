@@ -29,7 +29,6 @@ public class Board {
 			return true;
 		}
 		square[x][y] = -2;
-		System.out.println("Destroy at : " + x + ", " + y);
 		return false;
 	}
 
@@ -43,23 +42,6 @@ public class Board {
 		if(countShip == 0)
 			return true;
 		return false;
-	}
-
-	public String toString(){
-		String board = "";
-		for(int i = 0; i < square.length; i++){
-			for(int j = 0; j < square[i].length; j++){
-				if(square[i][j] == 1)
-					board += "T ";
-				else if (square[i][j] == -1)
-					board += "F ";
-				else 
-					board += "0 ";
-			}
-			board += "\n";
-		}
-		System.out.println();
-		return board;
 	}
 
 	public int[][] getSquare() {

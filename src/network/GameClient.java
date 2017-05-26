@@ -38,7 +38,6 @@ public class GameClient extends Observable {
 	class NetworkListener extends Listener {
 
 		public void received(Connection connection, Object object) {
-			System.out.println("Notify");
 			setChanged();
 			notifyObservers(object);
 		}

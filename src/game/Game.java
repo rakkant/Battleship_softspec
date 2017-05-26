@@ -12,8 +12,8 @@ public class Game extends PApplet implements Observer {
 
 	private PImage bg, canoe, boat, ferrari, readyBtn, player1Btn, player2Btn, freezeBg, winBg, loseBg;
 	private boolean readyState, player1State, player2State, isServer, isClient, freeze;
-	//	private String whoWin = "";
-	private int x, y,count = 0;
+
+	private int x, y;
 	private int shootField[][];
 
 	private GameLogic gameLogic;
@@ -128,12 +128,10 @@ public class Game extends PApplet implements Observer {
 
 		if(checkBtnPlayerClick(player1Btn, 100, 701)){
 			player1State = true;
-			System.out.println("player1Btn is clicked");
 			startServer();
 		}
 		if(checkBtnPlayerClick(player2Btn, 350, 701)){
 			player2State = true;
-			System.out.println("player2Btn is clicked");
 			startClient();
 		}
 

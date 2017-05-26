@@ -24,7 +24,6 @@ public class GameLogic {
 		b1 = new Board(7, 8);
 		b2 = new Board(7, 8);
 		boardList = new Board[] {b1, b2};
-		System.out.println("Create server");
 		if(serverOrClient.equals("server")){
 			checkCreateServer = true;
 		}
@@ -35,7 +34,6 @@ public class GameLogic {
 			gameLogic = new GameLogic(serverOrClient);
 		else {
 			turn = 1;
-			System.out.println("Create client");
 		}	
 		return gameLogic;
 	}
@@ -59,7 +57,6 @@ public class GameLogic {
 	}
 
 	public void addShipToBoard(String status){
-		System.out.println("Add ship to " + status);
 		int turn = (status.equals("server")) ? 0 : 1;
 		for(Ship s : (ArrayList<Ship>) allPlayer[turn]){
 			boardList[turn].addShip(s.getBoardPosX(), s.getBoardPosY(), s.getSizeBoatX(), s.getSizeBoatY());
@@ -84,7 +81,6 @@ public class GameLogic {
 					for(int j=0; j <= 7 - s.getSizeBoatY() && !checkInField; j++){
 						if(s.getX() >= startPointX && s.getY() >= startPointY && s.getX() < startPointX+ SIZE_BOARD && s.getY() < startPointY+ SIZE_BOARD){
 							s.setMagnet(startPointX, startPointY, i, j);
-							System.out.println(s.getBoardPosX() + " : " + s.getBoardPosY() + " size : " + s.getSizeBoatX() + "," + s.getSizeBoatY());
 							checkInField = true;
 						}
 						startPointY += SIZE_BOARD;
@@ -99,7 +95,6 @@ public class GameLogic {
 	}
 
 	public void setClick(int mouseX, int mouseY, String status){
-		System.out.println("set click at " + status);
 		int turn = (status.equals("server")) ? 0 : 1;
 		for(Ship s : (ArrayList<Ship>) allPlayer[turn]){
 			if(!s.isClick())
@@ -128,13 +123,9 @@ public class GameLogic {
 		if(position != null){
 			this.turn++;
 			return boardList[turn].destroy(position[0], position[1]);
-		} else
-			System.out.println("Miss");
+		} 
 		return false;
-		//		b.destroy(x, y);
-		//		System.out.println("Shoot missle at : "+ x + " ," + y);
 	}
-
 
 	public boolean checkAllShipInField(String status){
 		int turn = (status.equals("server")) ? 0 : 1;
@@ -178,8 +169,4 @@ public class GameLogic {
 	public void setCheckReady(int checkReady) {
 		this.checkReady = checkReady;
 	}
-
-
-
-
 }
