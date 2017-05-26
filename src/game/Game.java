@@ -10,8 +10,9 @@ import network.GameServer;
 
 public class Game extends PApplet implements Observer {
 
-	private PImage bg, canoe, boat, ferrari, readyBtn, player1Btn, player2Btn, freezeBg;
+	private PImage bg, canoe, boat, ferrari, readyBtn, player1Btn, player2Btn, freezeBg, winBg, loseBg;
 	private boolean readyState, player1State, player2State, isServer, isClient, freeze;
+//	private String whoWin = "";
 	private int x, y,count = 0;
 	private int shootField[][];
 
@@ -64,6 +65,8 @@ public class Game extends PApplet implements Observer {
 		readyBtn = loadImage("image/readyBtn.jpg");
 		player1Btn = loadImage("image/player1Btn.jpg");
 		player2Btn = loadImage("image/player2Btn.jpg");
+		winBg = loadImage("image/Winner.jpg");
+		loseBg = loadImage("image/lose.jpg");
 
 		freezeBg = loadImage("image/freeze.png");
 
@@ -129,7 +132,7 @@ public class Game extends PApplet implements Observer {
 			readyState = true;
 			gameLogic.addShipToBoard(getStatus());
 		}
-		
+
 		if(checkBtnPlayerClick(player1Btn, 100, 701)){
 			player1State = true;
 			System.out.println("player1Btn is clicked");
@@ -140,7 +143,7 @@ public class Game extends PApplet implements Observer {
 			System.out.println("player2Btn is clicked");
 			startClient();
 		}
-		
+
 		super.mouseReleased();
 	}
 	public boolean checkBtnPlayerClick(PImage img, int posX, int posY){
@@ -186,6 +189,19 @@ public class Game extends PApplet implements Observer {
 			if ( (getStatus().equalsIgnoreCase("Server") && gameLogic.getTurn()%2 == 1) || (getStatus().equalsIgnoreCase("client") && gameLogic.getTurn()%2 == 0)){
 				freeze = false;
 				image(freezeBg,0,0);
+			}
+			
+			if(getStatus().equals("client")){
+				if(gameLogic.checkLose().equals("client"))
+					image(winBg, 0, 0);
+				else if (gameLogic.checkLose().equals("server"))
+					image(loseBg, 0, 0);
+				
+			} else if (getStatus().equals("server")){
+				if(gameLogic.checkLose().equals("client"))
+					image(loseBg, 0, 0);
+				else if (gameLogic.checkLose().equals("server"))
+					image(winBg, 0, 0);
 			}
 		}
 	}

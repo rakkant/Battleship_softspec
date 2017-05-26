@@ -140,6 +140,14 @@ public class GameLogic {
 		}
 		return true;
 	}
+	
+	public String checkLose(){
+		if(boardList[0].isLose())
+			return "client";
+		if(boardList[1].isLose())
+			return "server";
+		return "noWin";
+	}
 
 	public Board getB(String status) {
 		int turn = (status.equals("server")) ? 0 : 1;

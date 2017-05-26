@@ -40,7 +40,7 @@ public class Board {
 		return false;
 	}
 
-	public boolean isWin(){
+	public boolean isLose(){
 		if(countShip == 0)
 			return true;
 		return false;
