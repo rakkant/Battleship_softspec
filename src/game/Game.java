@@ -103,13 +103,10 @@ public class Game extends PApplet implements Observer {
 		if(readyState && count == 1){
 
 			int[] posShoot = gameLogic.checkPositionShoot(mouseX, mouseY);
-
-//			System.out.println("Shot !");
-			if (gameLogic.shoot(posShoot, getStatus())) {
+			if (gameLogic.shoot(posShoot, getStatus()))
 				shootField[posShoot[0]][posShoot[1]] = -1;
-			} else {
-				shootField[posShoot[0]][posShoot[1]] = 2;
-			}
+			else
+				shootField[posShoot[0]][posShoot[1]] = -2;
 			
 //			gameServer.send(gameLogic);
 //			gameClient.send(gameLogic);
@@ -192,49 +189,39 @@ public class Game extends PApplet implements Observer {
 	}
 
 	private void drawField(){
-		int posX = 49, posY = 56;
-		for ( int i = 0 ; i < shootField[0].length ; i++){
-			for ( int j = 0 ; j < shootField.length ; j++){
-				if ( shootField[j][i] == -2 )
-					fill(41, 128, 185);
-				else if ( shootField[j][i] == -1)
-					fill(230, 126, 34);
-				else
-					noFill();
-				noStroke();
-				rect(posX, posY, 65, 65);
-				posY += 68;
-			}
-			posX+= 68;
-			posY = 56;
-		}
-
+		drawRecOfField(65, 68, 49, 56, shootField, "field");
 	}
+	
 	private void drawPreviewField(){
-		int posX = 45, posY = 570;
 		noStroke();
 		fill(161, 225, 234);
 		rect(35, 560, 220, 195, 10);
-		int [][] array = new int [8][7];
-		array = gameLogic.getB(getStatus()).getSquare();
-
-		for(int i = 0; i < array[0].length; i++){
-			for(int j = 0; j < array.length; j++){
-				if ( array[j][i] == 1 )
+		drawRecOfField(24, 25, 45, 570, gameLogic.getB(getStatus()).getSquare(), "preview");
+	}
+	
+	public void drawRecOfField(int sizeBox, int sizeMove, int posX, int posY, int[][] field, String type){
+		int tempPosY = posY;
+		if(type.equals("preview"))
+			stroke(255, 255, 255);
+		else 
+			noStroke();
+		
+		for(int i = 0; i < field[0].length; i++){
+			for(int j = 0; j < field.length; j++){
+				if ( field[j][i] == 1 )
 					fill(46, 204, 113);
-				else if ( array[j][i] == -1)
+				else if ( field[j][i] == -1)
 					fill(230, 126, 34);
-				else if ( array[j][i] == -2)
+				else if ( field[j][i] == -2)
 					fill(41, 128, 185);
 				else
 					noFill();
-
-				stroke(255, 255, 255);
-				rect(posX, posY, 24, 24);
-				posY += 25;
+	
+				rect(posX, posY, sizeBox, sizeBox);
+				posY += sizeMove;
 			}
-			posX += 25;
-			posY = 570;
+			posX += sizeMove;
+			posY = tempPosY;
 		}
 	}
 
