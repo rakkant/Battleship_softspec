@@ -14,7 +14,7 @@ public class GameLogic {
 	private static int turn = 0;
 	private static boolean checkCreateServer;
 
-	private int sizeBoard = 68;
+	private final int SIZE_BOARD = 68;
 
 	private GameLogic(String serverOrClient){
 		shipLists2 = new ArrayList<>();
@@ -78,15 +78,15 @@ public class GameLogic {
 				boolean checkInField = false;
 				for(int i=0; i <= 8 - s.getSizeBoatX() && !checkInField; i++){
 					for(int j=0; j <= 7 - s.getSizeBoatY() && !checkInField; j++){
-						if(s.getX() >= startPointX && s.getY() >= startPointY && s.getX() < startPointX+sizeBoard && s.getY() < startPointY+sizeBoard){
+						if(s.getX() >= startPointX && s.getY() >= startPointY && s.getX() < startPointX+ SIZE_BOARD && s.getY() < startPointY+ SIZE_BOARD){
 							s.setMagnet(startPointX, startPointY, i, j);
 							System.out.println(s.getBoardPosX() + " : " + s.getBoardPosY() + " size : " + s.getSizeBoatX() + "," + s.getSizeBoatY());
 							checkInField = true;
 						}
-						startPointY += sizeBoard;
+						startPointY += SIZE_BOARD;
 					}
 					startPointY = 54;
-					startPointX += sizeBoard;
+					startPointX += SIZE_BOARD;
 				}
 				if(!checkInField) s.setStartPosition();
 			}
@@ -103,6 +103,18 @@ public class GameLogic {
 					break;
 		}
 	}
+	
+	public int[] checkPositionShoot(int mouseX, int mouseY){
+		int posX = 48, posY = 54;
+		for(int i = 0; i <= 8; i++){
+			for(int j = 0; j <= 7; j++){
+				if(mouseX >= posX && mouseY >= posY && mouseX < posX + SIZE_BOARD && mouseY < posY + SIZE_BOARD){
+					return new int[] {i ,j};
+				}
+			}
+		}
+		return null;
+	}
 
 	public void shoot(int x, int y, String status){
 		int turn = (status.equals("server")) ? 1 : 0;
@@ -111,6 +123,7 @@ public class GameLogic {
 		//		b.destroy(x, y);
 		//		System.out.println("Shoot missle at : "+ x + " ," + y);
 	}
+	
 
 	public boolean checkAllShipInField(String status){
 		int turn = (status.equals("server")) ? 0 : 1;
