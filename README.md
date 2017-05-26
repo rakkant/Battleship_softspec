@@ -36,8 +36,8 @@ Note: We used Processing https://processing.org as the library sources in this p
   - Game UI
   - Game Logic
   
-
-![Alt text](http://imgur.com/a/6UpcP "Committing")
+![alt text](screenshots/filename.png "Description goes here")
+![Alt text](https://ibb.co/e6MMkv)
 
 This image describes committing of each members. 
 *(Rakkant and Rakkan Tiasakul are the same contributer.)*
