@@ -1,5 +1,6 @@
 # BATTLESHIP PROJECT
-*This project is a part of Software Specification & Design lecture. Battleship is a multiplayer game that created via JAVA. Players have to shoot the missile to opponent's ships. Player who can shoot all of opponent's ships is the winner.*
+*This project is a part of Software Specification & Design lecture. Battleship is a multiplayer game that created via JAVA. Players have to shoot the missile to opponent's ships. Player who can shoot all of opponent's ships is the winner. 
+Note: We used Processing https://processing.org as the library sources in this project*
 
 ## Instruction (How to play)
 1. Click run 
@@ -12,20 +13,30 @@
 
 ## Members
 - Rakkan Tiasakul 5810546013
-- Jirayuth Leeupathumwong 5810546616
+- Jirayut Leeupathumvong 5810546617
 - Tunya Wittayasiripaiboon 5810546676
 
 ## Design patterns
-- Observer
-- Singleton
-- Decorator
+- Observer : Used when there's method notify() is called for attacking enemy's ships.
+- Singleton : Used to solve the problems from conencting between server and client class.
+- Decorator : Used for creating Ship and decorating all of classes that belonged to Ship.
 
 ## Principles
 - Single Responsibility Principle : Each classes take responsible of themselves. 
 - Open/closed Principle : There're classes which use "Extends" , and they could be modified too.
 
 ## Members' role
-- Rakkan Tiasakul 5810546013 : 
-- Jirayuth Leeupathumwong 5810546616 :
-- Tunya Wittayasiripaiboon 5810546676 : 
+- Rakkan Tiasakul 5810546013
+  - Write README
+  - Create network game and connect multiplayer 
+- Jirayut Leeupathumvong 5810546617
+  - Design Unit and Background
+  - Game Logic
+- Tunya Wittayasiripaiboon 5810546676
+  - Game UI
+  - Game Logic
+  
 
+![alt text](http://imgur.com/a/6UpcP)
+This image describes committing of each members. 
+*(Rakkant and Rakkan Tiasakul are the same contributer.)*
