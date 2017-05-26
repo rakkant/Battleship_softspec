@@ -183,8 +183,6 @@ public class Game extends PApplet implements Observer {
 				image(freezeBg,0,0);
 			 if (getStatus().equalsIgnoreCase("client") && gameLogic.getTurn()%2 == 0)
 				image(freezeBg,0,0);
-			 
-		
 		}
 	}
 
