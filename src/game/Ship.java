@@ -9,9 +9,6 @@ public abstract class Ship extends PApplet {
     private PImage img;
 
     public Ship(){
-//        this.x = this.startPositionX = x;
-//        this.y = this.startPositionY = y;
-//        this.img = img;
         this.status = true;
         this.click = false;
     }
