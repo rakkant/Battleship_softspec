@@ -12,7 +12,7 @@ public class Game extends PApplet implements Observer {
 
 	private PImage bg, canoe, boat, ferrari, readyBtn, player1Btn, player2Btn, freezeBg, winBg, loseBg;
 	private boolean readyState, player1State, player2State, isServer, isClient, freeze;
-//	private String whoWin = "";
+	//	private String whoWin = "";
 	private int x, y,count = 0;
 	private int shootField[][];
 
@@ -75,11 +75,11 @@ public class Game extends PApplet implements Observer {
 	}
 
 	public void addShip(String status){
-		gameLogic.addShip(new Boat(55, 550, boat), status);
-		//		gameLogic.addShip(new Canoe(55, 620, boat), status);
-		//		gameLogic.addShip(new Canoe(205, 550, canoe), status);
-		//		gameLogic.addShip(new Canoe(295, 550, canoe), status);
-		//		gameLogic.addShip(new Ferrari(390, 550, ferrari), status);
+//		gameLogic.addShip(new Boat(55, 550, boat), status);
+//		gameLogic.addShip(new Canoe(55, 620, boat), status);
+//		gameLogic.addShip(new Canoe(205, 550, canoe), status);
+//		gameLogic.addShip(new Canoe(295, 550, canoe), status);
+		gameLogic.addShip(new Ferrari(390, 550, ferrari), status);
 	}
 
 	@Override
@@ -105,15 +105,12 @@ public class Game extends PApplet implements Observer {
 
 	public void shoot(){
 		if(readyState ){
-
 			int[] posShoot = gameLogic.checkPositionShoot(mouseX, mouseY);
 			if (gameLogic.shoot(posShoot, getStatus()) )
 				shootField[posShoot[0]][posShoot[1]] = -1;
 			else if (shootField[posShoot[0]][posShoot[1]] != -1 )
 				shootField[posShoot[0]][posShoot[1]] = -2;
 
-			//			gameServer.send(gameLogic);
-			//			gameClient.send(gameLogic);
 		}
 
 	}
@@ -181,9 +178,7 @@ public class Game extends PApplet implements Observer {
 				}
 				drawAllShip();
 			}
-//			count=1;
 		} else {
-			System.out.println(gameLogic.getCheckReady());
 			bg = loadImage("image/Bg2.jpg");
 			image(bg, 0, 0);
 			drawPreviewField();
@@ -192,13 +187,12 @@ public class Game extends PApplet implements Observer {
 				freeze = false;
 				image(freezeBg,0,0);
 			}
-			
 			if(getStatus().equals("client") && gameLogic.getCheckReady() == 2){
 				if(gameLogic.checkLose().equals("client"))
 					image(winBg, 0, 0);
 				else if (gameLogic.checkLose().equals("server"))
 					image(loseBg, 0, 0);
-				
+
 			} else if (getStatus().equals("server") && gameLogic.getCheckReady() == 2){
 				if(gameLogic.checkLose().equals("client"))
 					image(loseBg, 0, 0);

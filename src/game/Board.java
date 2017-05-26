@@ -7,7 +7,6 @@ public class Board {
 	private int countShip = 0;
 
 	public Board(int sizeX, int sizeY){
-		System.out.println("X"+sizeX+"Y"+sizeY);
 		square = new int [sizeX][sizeY];
 		for (int i = 0; i < sizeX ; i++)
 			for (int j = 0; j < sizeY ; j++)
