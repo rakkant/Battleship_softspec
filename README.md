@@ -18,6 +18,6 @@
 ## Design patterns
 - Observer
 - Singleton
--
+- Decorator
 
 ## Members' role
