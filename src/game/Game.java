@@ -14,19 +14,18 @@ public class Game extends PApplet implements Observer {
 	private boolean readyState, player1State, player2State, isServer, isClient;
 	private int x, y;
 
-	private GameLogic gameLogic1, gameLogic2;
+	private GameLogic gameLogic;
 	private GameServer gameServer;
 	private GameClient gameClient;
 
 	public void start(){
-		gameLogic1 = new GameLogic();
-		gameLogic2 = new GameLogic();
+		gameLogic = (GameLogic.checkServerIsCreate()) ? GameLogic.getInstance("client") : GameLogic.getInstance("server");
 
 		gameServer = new GameServer();
 		gameServer.addObserver(this);
 		gameClient = new GameClient();
 		gameClient.addObserver(this);
-		
+
 		readyState = false;
 	}
 
@@ -54,18 +53,18 @@ public class Game extends PApplet implements Observer {
 		player1Btn = loadImage("image/player1Btn.jpg");
 		player2Btn = loadImage("image/player2Btn.jpg");
 
-		gameLogic1.addShip(new Boat(55, 550, boat));
-		gameLogic1.addShip(new Canoe(55, 620, boat));
-		gameLogic1.addShip(new Canoe(205, 550, canoe));
-		gameLogic1.addShip(new Canoe(295, 550, canoe));
-		gameLogic1.addShip(new Ferrari(390, 550, ferrari));
+		gameLogic.addShip(new Boat(55, 550, boat));
+		gameLogic.addShip(new Canoe(55, 620, boat));
+		gameLogic.addShip(new Canoe(205, 550, canoe));
+		gameLogic.addShip(new Canoe(295, 550, canoe));
+		gameLogic.addShip(new Ferrari(390, 550, ferrari));
 
 		drawAllShip();
 	}
 
 	@Override
 	public void mouseDragged() {
-		gameLogic1.move(x, y, mouseX, mouseY);
+		gameLogic.move(x, y, mouseX, mouseY);
 		x = mouseX;
 		y = mouseY;
 		super.mouseDragged();
@@ -76,7 +75,7 @@ public class Game extends PApplet implements Observer {
 		x = mouseX;
 		y = mouseY;
 		if ( !readyState ){
-			gameLogic1.setClick(mouseX, mouseY);
+			gameLogic.setClick(mouseX, mouseY);
 			readyBtnAction("click");
 			super.mousePressed();
 		}
@@ -86,22 +85,22 @@ public class Game extends PApplet implements Observer {
 	public void mouseClicked() {
 		readyBtnAction("click");
 		if(readyState){
-			gameLogic1.shoot(0, 0);
-			gameServer.send(gameLogic1);
-			gameClient.send(gameLogic1);
+			gameLogic.shoot(0, 0);
+			gameServer.send(gameLogic);
+			gameClient.send(gameLogic);
 		}
 		super.mouseClicked();
 	}
 
 	@Override
 	public void mouseReleased() {
-		
-		gameLogic1.magnetShip();
+
+		gameLogic.magnetShip();
 		readyBtnAction("release");
-		
-		if ( gameLogic1.checkAllShipInField() && x >= 50 && x <= 544 && y >=600 && y <= 738){
+
+		if ( gameLogic.checkAllShipInField() && x >= 50 && x <= 544 && y >=600 && y <= 738){
 			readyState = true;
-			gameLogic1.addShipToBoard();
+			gameLogic.addShipToBoard();
 		}
 		if ( x >= 100 && x <= 100+player1Btn.getModifiedX2() && y >= 701 && y <= 701 + player1Btn.getModifiedY2()){
 			player1State = true;
@@ -132,7 +131,7 @@ public class Game extends PApplet implements Observer {
 		if (!readyState){
 			image(bg, 0, 0);
 			drawAllShip();
-			if (gameLogic1.checkAllShipInField()){ 
+			if (gameLogic.checkAllShipInField()){ 
 				image(readyBtn,50,600);
 			} else {
 				image(player1Btn, 100, 700);
@@ -144,9 +143,9 @@ public class Game extends PApplet implements Observer {
 			drawPreviewField();
 		}
 	}
-	
+
 	private void drawAllShip(){
-		for(Ship s : gameLogic1.getShipLists()){
+		for(Ship s : gameLogic.getShipLists()){
 			image(s.getImage(), s.getX(), s.getY());
 		}
 	}
@@ -157,7 +156,7 @@ public class Game extends PApplet implements Observer {
 		fill(161, 225, 234);
 		rect(35, 560, 220, 195, 10);
 		int [][] array = new int [8][7];
-		array = gameLogic1.getB().getSquare();
+		array = gameLogic.getB().getSquare();
 
 		for(int i = 0; i < array[0].length; i++){
 			for(int j = 0; j < array.length; j++){
@@ -167,7 +166,7 @@ public class Game extends PApplet implements Observer {
 					fill(230, 126, 34);
 				else
 					noFill();
-				
+
 				stroke(255, 255, 255);
 				rect(posX, posY, 24, 24);
 				posY += 25;
@@ -180,8 +179,9 @@ public class Game extends PApplet implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		if(!(arg instanceof GameLogic))
-			gameLogic1.start();
-		else
-			gameLogic2 = (GameLogic) arg;
+			gameLogic.start();
+		else {
+			gameLogic = (GameLogic) arg;
+		}
 	}
 }

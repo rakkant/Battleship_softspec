@@ -3,39 +3,71 @@ package game;
 import java.util.ArrayList;
 
 public class GameLogic {
-	
-	private Board b;
-	private ArrayList<Ship> shipLists;
+
+	private static GameLogic gameLogic;
+
+	private Board b1, b2;
+	private ArrayList<Ship> shipLists1, shipLists2;
+	private Board[] boardList;
+	private ArrayList[] allPlayer;
+
+	private static int turn = 0;
+	private static boolean checkCreateServer;
+
 	private int sizeBoard = 68;
-	
-	public GameLogic(){
-		b = new Board(7, 8);
-		shipLists = new ArrayList<>();
+
+	private GameLogic(String serverOrClient){
+		shipLists2 = new ArrayList<>();
+		shipLists1 = new ArrayList<>();
+		allPlayer = new ArrayList[] {shipLists1, shipLists2};
+		b1 = new Board(7, 8);
+		b2 = new Board(7, 8);
+		boardList = new Board[] {b1, b2};
+		System.out.println("Create server");
+		if(serverOrClient.equals("server")){
+			checkCreateServer = true;
+		}
+	}
+
+	public static GameLogic getInstance(String serverOrClient){
+		if(gameLogic == null)
+			gameLogic = new GameLogic(serverOrClient);
+		else {
+			turn = 1;
+			System.out.println("Create client");
+		}	
+		return gameLogic;
+	}
+
+	public static boolean checkServerIsCreate(){
+		if(checkCreateServer)
+			return true;
+		return false;
 	}
 
 	public void start() {
-		
+		this.turn = 0;
 	}
-	
+
 	public void addShip(Ship s){
-		shipLists.add(s);
+		((ArrayList<Ship>) allPlayer[turn%2]).add(s);
 	}
-	
+
 	public void addShipToBoard(){
-		for(Ship s : shipLists){
-			b.addShip(s.getBoardPosX(), s.getBoardPosY(), s.getSizeBoatX(), s.getSizeBoatY());
+		for(Ship s : (ArrayList<Ship>) allPlayer[turn%2]){
+			boardList[turn%2].addShip(s.getBoardPosX(), s.getBoardPosY(), s.getSizeBoatX(), s.getSizeBoatY());
 		}
 	}
-	
+
 	public void move(int x, int y, int mouseX, int mouseY){
-		for(Ship s : shipLists){
+		for(Ship s : (ArrayList<Ship>) allPlayer[turn%2]){
 			if(s.isClick())
 				s.move(mouseX - x,mouseY- y);
 		}
 	}
-	
+
 	public void magnetShip(){
-		for(Ship s : shipLists){
+		for(Ship s : (ArrayList<Ship>) allPlayer[turn%2]){
 			if(s.isClick()){
 				int startPointX = 48, startPointY = 54;
 				boolean checkInField = false;
@@ -56,22 +88,24 @@ public class GameLogic {
 			s.setClick(false);
 		}
 	}
-	
+
 	public void setClick(int mouseX, int mouseY){
-		for(Ship s : shipLists){
+		for(Ship s : (ArrayList<Ship>) allPlayer[turn%2]){
 			if(!s.isClick())
 				if(s.checkClick(mouseX, mouseY))
 					break;
 		}
 	}
-	
+
 	public void shoot(int x, int y){
-		b.destroy(x, y);
-		System.out.println("Shoot missle at : "+ x + " ," + y);
+		boardList[turn%2].destroy(x, y);
+		turn++;
+		//		b.destroy(x, y);
+		//		System.out.println("Shoot missle at : "+ x + " ," + y);
 	}
-	
+
 	public boolean checkAllShipInField(){
-		for(Ship s : shipLists){
+		for(Ship s : (ArrayList<Ship>) allPlayer[turn%2]){
 			if(!s.isInField())
 				return false;
 		}
@@ -79,19 +113,11 @@ public class GameLogic {
 	}
 
 	public Board getB() {
-		return b;
-	}
-
-	public void setB(Board b) {
-		this.b = b;
+		return boardList[turn%2];
 	}
 
 	public ArrayList<Ship> getShipLists() {
-		return shipLists;
-	}
-
-	public void setShipLists(ArrayList<Ship> shipLists) {
-		this.shipLists = shipLists;
+		return (ArrayList<Ship>) allPlayer[turn%2];
 	}
 
 }
