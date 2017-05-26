@@ -13,7 +13,7 @@ public class Game extends PApplet implements Observer {
 	private PImage bg, canoe, boat, ferrari,readyBtn,player1Btn,player2Btn;
 	private boolean readyState, player1State, player2State, isServer, isClient;
 	private int x, y;
-	
+
 	private GameLogic gameLogic;
 	private GameServer gameServer;
 	private GameClient gameClient;
@@ -42,7 +42,7 @@ public class Game extends PApplet implements Observer {
 	public void settings(){
 		size(640,800);
 	}
-	
+
 	public String getStatus(){
 		if(isServer)
 			return "server";
@@ -57,11 +57,11 @@ public class Game extends PApplet implements Observer {
 		readyBtn = loadImage("image/readyBtn.jpg");
 		player1Btn = loadImage("image/player1Btn.jpg");
 		player2Btn = loadImage("image/player2Btn.jpg");
-		
+
 		addShip("server");
 		addShip("client");
 	}
-	
+
 	public void addShip(String status){
 		gameLogic.addShip(new Boat(55, 550, boat), status);
 		gameLogic.addShip(new Canoe(55, 620, boat), status);
@@ -95,9 +95,9 @@ public class Game extends PApplet implements Observer {
 		if(readyState){
 			gameLogic.shoot(gameLogic.checkPositionShoot(mouseX, mouseY), getStatus());
 			System.out.println("Shot !");
-//			gameLogic.shoot(0, 0, getStatus());
-//			gameServer.send(gameLogic);
-//			gameClient.send(gameLogic);
+			//			gameLogic.shoot(0, 0, getStatus());
+			//			gameServer.send(gameLogic);
+			//			gameClient.send(gameLogic);
 		}
 		super.mouseClicked();
 	}
@@ -145,16 +145,20 @@ public class Game extends PApplet implements Observer {
 				image(player2Btn, 350, 700);
 			}
 			else {
-				if ( player1State ){
-					image(player1Btn, 100, 700);
-				}
-				else if ( player2State){
-					image(player2Btn, 350, 700);
-				}
-				drawAllShip();
 				if (gameLogic.checkAllShipInField(getStatus())){ 
 					image(readyBtn,50,600);
 				} 
+				else { 
+					if ( player1State ){
+
+						image(player1Btn, 100, 700);
+					}
+					if ( player2State){
+						image(player2Btn, 350, 700);
+					}
+				}
+				drawAllShip();
+
 			}
 		} else {
 			bg = loadImage("image/Bg2.jpg");
@@ -177,7 +181,7 @@ public class Game extends PApplet implements Observer {
 		rect(35, 560, 220, 195, 10);
 		int [][] array = new int [8][7];
 		array = gameLogic.getB(getStatus()).getSquare();
-		
+
 		for(int i = 0; i < array[0].length; i++){
 			for(int j = 0; j < array.length; j++){
 				if ( array[j][i] == 1 )

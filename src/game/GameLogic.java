@@ -106,10 +106,10 @@ public class GameLogic {
 
 	public int[] checkPositionShoot(int mouseX, int mouseY){
 		int posX = 48, posY = 54;
-		for(int i = 0; i <= 8; i++){
-			for(int j = 0; j <= 7; j++){
+		for(int i = 0; i <= 7; i++){
+			for(int j = 0; j <= 8; j++){
 				if(mouseX >= posX && mouseY >= posY && mouseX < posX + SIZE_BOARD && mouseY < posY + SIZE_BOARD){
-					return new int[] {i ,j};
+					return new int[] {j,i};
 				}
 				posY += SIZE_BOARD;
 			}
